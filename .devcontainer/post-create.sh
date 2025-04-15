@@ -29,6 +29,6 @@ cd frontend
 npm install
 
 # Lancer le serveur Vue (en arrière-plan)
-nohup npm run dev -- --host &
+nohup npm run dev --prefix frontend > frontend.log 2>&1 &
 
 echo "✅ Environnement prêt sur Codespaces !"
