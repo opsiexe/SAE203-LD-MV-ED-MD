@@ -2,14 +2,63 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{{ title }}</title>
+    <title>Tickets Support</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenue sur ma démo Flask ! 👋</h1>
-        <p>Salut {{ name }}, ceci est une page générée avec Flask.</p>
-        <a href="https://flask.palletsprojects.com/" target="_blank" class="btn">En savoir plus</a>
+        <h1>Liste des Tickets</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert">
+              {% for message in messages %}
+                <p>{{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <table>
+            <tr>
+                <th>Objet</th>
+                <th>Description</th>
+                <th>Email</th>
+                <th>Pièce jointe</th>
+                <th>Répondre</th>
+                <th>Résoudre</th>
+            </tr>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.objet }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>
+                    {% if ticket.piece_jointe %}
+                        <a href="{{ ticket.piece_jointe }}" target="_blank">
+                            <img src="{{ ticket.piece_jointe }}" width="100">
+                        </a>
+                    {% else %}
+                        Aucune
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+                        <input type="hidden" name="email" value="{{ ticket.email }}">
+                        <textarea name="message" placeholder="Votre réponse..." required></textarea><br>
+                        <button type="submit" name="envoyer_mail">Envoyer</button>
+                    </form>
+                </td>
+                <td>
+                    <form method="POST">
+                        <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+                        <button type="submit" name="resoudre_ticket">Résolu</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 </body>
 </html>
