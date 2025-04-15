@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur ma démo Flask ! 👋</h1>
+        <p>Salut {{ name }}, ceci est une page générée avec Flask.</p>
+        <a href="https://flask.palletsprojects.com/" target="_blank" class="btn">En savoir plus</a>
+    </div>
+</body>
+</html>
