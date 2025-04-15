@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# installer NPM
+npm install --prefix frontend
+
 # Lancer PostgreSQL
 docker start pg-sae203 || docker run --name pg-sae203 \
   -e POSTGRES_USER=postgres \
@@ -8,16 +11,23 @@ docker start pg-sae203 || docker run --name pg-sae203 \
   -p 5433:5432 \
   -d postgres
 
+# Attendre que le serveur PostgreSQL soit prêt
+echo "⌛ Attente de PostgreSQL..."
+sleep 5
+
 # Backend Flask
-cd backend
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
+
+# Initialise la Tables
+python backend/init_db.py
 
 # Lancer le serveur Flask (en arrière-plan)
-nohup python ./src/app.py & 
+nohup flask --app backend/app run --host=0.0.0.0 --port=5000 &
 
 # Frontend Vue
 cd ../frontend
 npm install
+
 # Lancer le serveur Vue (en arrière-plan)
 nohup npm run dev -- --host &
 
