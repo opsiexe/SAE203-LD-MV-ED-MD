@@ -45,6 +45,4 @@ Sur l'editeur web codespace, a coter du terminal tu devrait un onglet `port` cli
 
 Vous aurez juste a cliquer sur le lien.
 
-::: warning Liens et adresses localhost
-⚠️Les lien sont disponible que sur l'interface web du Codespace sinon c'est des adresses localhost qui ne vont bien sur pas fonctionner !
-:::
+**⚠️Les lien sont disponible que sur l'interface web du Codespace sinon c'est des adresses localhost qui ne vont bien sur pas fonctionner !**
