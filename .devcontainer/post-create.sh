@@ -22,7 +22,7 @@ pip install -r backend/requirements.txt
 python backend/init_db.py
 
 # Lancer le serveur Flask (en arrière-plan)
-nohup flask --app backend/app run --host=0.0.0.0 --port=5000 &
+nohup flask --app backend/src/app run --host=0.0.0.0 --port=5000 &
 
 # Frontend Vue
 cd ../frontend
