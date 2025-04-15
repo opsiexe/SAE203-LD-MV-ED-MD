@@ -10,9 +10,13 @@ Projet fullstack de gestion de tickets de support avec :
 
 ## 🚀 Lancement rapide
 
-### 1. Cloner le dépôt sur GitHub Codespaces
+### 1. Lancer le Codespace (obligatoire)
 
-Clique sur **"Code > Codespaces > Create codespace on main"** pour lancer ton espace de développement dans le cloud.
+Clique sur **"Code > Codespaces > Create codespace on main"** pour lancer ton espace de développement dans le cloud. Une fois dans le codespace lance cette commande pour démarer le frontend : 
+
+```bash
+nohup npm run dev --prefix frontend &
+```
 
 ### 2. Verifier que le docker est lancer
 
