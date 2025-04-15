@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
+from email.mime.text import MIMEText
 import psycopg2
+import smtplib
 
 def get_db_connection():
     conn = psycopg2.connect(
@@ -44,6 +46,27 @@ def delete_ticket(ticket_id):
     conn.commit()
     cur.close()
     conn.close()
+    return redirect(url_for("index"))
+
+@app.route("/send_email/<int:ticket_id>", methods=["POST"])
+def send_email(ticket_id):
+    to_email = request.form["email"]
+    message = request.form["message"]
+
+    msg = MIMEText(message, "html")
+    msg["Subject"] = "Réponse à votre ticket"
+    msg["From"] = "sae203.md.ld.mv.ed@gmail.com"
+    msg["To"] = to_email
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login("sae203.md.ld.mv.ed@gmail.com", "eusm wqix ojss nxdy")
+            server.send_message(msg)
+        flash(f"Email envoyé à {to_email}")
+    except Exception as e:
+        flash(f"Erreur lors de l'envoi du mail : {str(e)}")
+    
     return redirect(url_for("index"))
 
 if __name__ == '__main__':
