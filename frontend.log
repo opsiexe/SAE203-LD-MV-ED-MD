@@ -1,12 +1,13 @@
 nohup: ignoring input
 
 > vue-project@0.0.0 dev
-> vite
+> vite --host
 
 
-  VITE v6.2.6  ready in 490 ms
+  VITE v6.2.6  ready in 468 ms
 
   ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
+  ➜  Network: http://10.0.1.45:5173/
+  ➜  Network: http://172.17.0.1:5173/
   ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
   ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
