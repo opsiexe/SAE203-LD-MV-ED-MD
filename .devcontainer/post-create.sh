@@ -25,7 +25,7 @@ python backend/init_db.py
 nohup flask --app backend/src/app run --host=0.0.0.0 --port=5000 &
 
 # Frontend Vue
-cd ../frontend
+cd frontend
 npm install
 
 # Lancer le serveur Vue (en arrière-plan)
