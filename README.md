@@ -50,3 +50,75 @@ Sur l'editeur web codespace, a coter du terminal tu devrait un onglet `port` cli
 Vous aurez juste a cliquer sur le lien.
 
 **⚠️Les lien sont disponible que sur l'interface web du Codespace sinon c'est des adresses localhost qui ne vont bien sur pas fonctionner !**
+
+---
+## 🧠 Structure et fonctionnement du projet
+
+Ce projet est une application de gestion de tickets de support divisée en deux interfaces distinctes :
+
+- 🎨 Frontend (Vue.js) – pour les utilisateurs finaux qui veulent envoyer un ticket
+- 🧠 Backend (Flask) – pour les agents de support qui peuvent voir, gérer et répondre aux tickets
+
+### 🔙 Backend – Interface Support (Flask)
+
+📁 Dossier : `backend/src/`
+
+Cette partie est utilisée par les agents de support pour :
+
+- Voir tous les tickets reçus
+
+- Répondre à un ticket
+
+- Chnager le statut d'un ticket
+
+- Envoyer une réponse par email
+
+📌 Fichiers clés :
+
+| Fichier            | Rôle                                                                                                     |
+|--------------------|----------------------------------------------------------------------------------------------------------|
+| `app.py`           | Point d’entrée de l’application Flask                                                                    |
+| `templates/`       | Contient les templates HTML du backend                                                                   |
+| `static/`          | Pour les fichier statiques (CSS, JS, images) liés à Flask                                                |
+| `init_db.py`       | Script d'initialisation de la base (création des tables)(ne pas toucher sauf cas speciaux)                                 |
+| `requirements.txt` | Liste des dépendances Python du backend pour l'installation (ne pas toucher sauf ajout d'une dépendance) |
+
+✅ Pour modifier cette interface :
+- Modifier l’UI ➜ `templates/*.html`
+- Modifier la logique (filtrage, envoi email, etc.) ➜ `app.py`
+- Ajouter une table ou changer une structure ➜ `init_db.py` + relancer (prevenir en cas de modifications)
+
+### 🎨 Frontend – Formulaire Utilisateur (Vue.js)
+
+📁 Dossier : `frontend/`
+
+Cette partie est utilisée par les agents de support pour :
+
+- Voir tous les tickets reçus
+
+- Répondre à un ticket
+
+- Changer le status d'un ticket
+
+- Envoyer une réponse par email
+
+📌 Fichiers clés :
+
+| Fichier/Dossier               | Rôle |
+|-------------------------------|------|
+| `src/App.vue`                 | Composant principal |
+| `src/components/`             | Composants UI (formulaire de ticket, alertes, etc.) |
+| `src/assets/`                 | Images, styles, icônes |
+| `src/main.js`                 | Point d’entrée Vue |
+| `public/index.html`           | Base HTML injectée par Vite |
+
+#### ✅ Pour modifier cette interface :
+- Modifier l’apparence ➜ `src/components/*.vue`
+
+---
+
+## 🔗 Communication entre les deux
+
+- Le **frontend** envoie les tickets via `POST` à une route Flask (souvent `/create` ou `/submit`)
+- Le **backend** traite la requête, enregistre dans PostgreSQL
+- Les agents utilisent l’interface Flask pour gérer les réponses, consulter l’état, etc.
