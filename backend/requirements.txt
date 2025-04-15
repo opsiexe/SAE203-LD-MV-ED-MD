@@ -1,6 +1,0 @@
-flask
-flask-cors
-flask_sqlalchemy
-psycopg2-binary
-python-dotenv
-imaplib2
