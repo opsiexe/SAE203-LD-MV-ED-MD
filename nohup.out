@@ -846,3 +846,266 @@ TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
 127.0.0.1 - - [16/Apr/2025 20:48:48] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
 127.0.0.1 - - [16/Apr/2025 20:48:49] "GET /api/tickets HTTP/1.1" 200 -
 127.0.0.1 - - [16/Apr/2025 20:48:49] "GET /api/tickets HTTP/1.1" 200 -
+ * Serving Flask app 'backend/src/app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.99:5000
+[33mPress CTRL+C to quit[0m
+
+> vue-project@0.0.0 dev
+> vite --host
+
+
+  VITE v6.2.6  ready in 463 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.0.0.99:5173/
+  ➜  Network: http://172.17.0.1:5173/
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+127.0.0.1 - - [16/Apr/2025 20:52:24] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 20:52:25] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2025-04-16 20:52:36,587] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:52:36] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+[2025-04-16 20:52:36,853] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:52:36] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:52:36] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 20:52:37] "GET /api/tickets HTTP/1.1" 200 -
+[2025-04-16 20:52:39,200] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:52:39] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:52:39] "GET /api/tickets HTTP/1.1" 200 -
+8:53:25 PM [vite] (client) hmr update /src/components/navbar.vue
+[2025-04-16 20:53:27,551] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:53:27] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:53:27] "GET /api/tickets HTTP/1.1" 200 -
+[2025-04-16 20:53:29,091] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:53:29] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:53:29] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 20:54:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 20:54:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2025-04-16 20:54:12,370] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:54:12] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+[2025-04-16 20:54:12,630] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:54:12] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:54:12] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 20:54:12] "GET /api/tickets HTTP/1.1" 200 -
+8:58:05 PM [vite] (client) hmr update /src/components/mytickets.vue, /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+[2025-04-16 20:58:07,885] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 20:58:07] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 20:58:08] "GET /api/tickets HTTP/1.1" 200 -
+9:00:34 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:01:48 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+[2025-04-16 21:01:58,675] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 21:01:58] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+[2025-04-16 21:01:58,941] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [16/Apr/2025 21:01:58] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [16/Apr/2025 21:01:58] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 21:01:59] "GET /api/tickets HTTP/1.1" 200 -
+9:03:18 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:04:01 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:04:07 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:04:13 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:04:25 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+9:06:29 PM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css

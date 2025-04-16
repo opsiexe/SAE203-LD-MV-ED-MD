@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <div class="navbar-container">
-      <a href="#" class="navbar-logo">Support</a>
+      <a href="/" class="navbar-logo">Support</a>
       <!-- Menu utilisateur -->
       <div class="user-menu">
         <div class="avatar" @click="toggleUserMenu">
