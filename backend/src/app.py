@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response
 from flask_cors import CORS
 from email.mime.text import MIMEText
 import psycopg2
@@ -16,7 +16,7 @@ def get_db_connection():
 
 app = Flask(__name__)
 app.secret_key = "dev"
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+CORS(app, origins=["*"])
 
 @app.route('/')
 def index():
@@ -71,14 +71,49 @@ def send_email(ticket_id):
     
     return redirect(url_for("index"))
 
-@app.route('/api/tickets', methods=["GET"])
-def api_tickets():
+@app.route("/mark_open/<int:ticket_id>", methods=["POST"])
+def mark_open(ticket_id):
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM tickets;')
-    tickets = cur.fetchall()
+    cur.execute("UPDATE tickets SET statut = %s WHERE id = %s", ("ouvert", ticket_id))
+    flash("Le statut a bien été changer")
+    conn.commit()
     cur.close()
     conn.close()
+    return redirect(url_for("index"))
+
+@app.route('/api/tickets', methods=['GET', 'OPTIONS'])
+def get_tickets():
+    if request.method == 'OPTIONS':
+        response = app.make_response('', 200)
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'  # Remplacer par l'origine de ton frontend
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM tickets')
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # Convertir les lignes en dictionnaires
+    tickets = []
+    for row in rows:
+        ticket = {
+            "id": row[0],
+            "objet": row[1],
+            "description": row[2],
+            "email": row[3],
+            "piece_jointe": row[4],
+            "statut": row[5],
+            "date_creation": row[6],
+            "date_modification": row[7],
+            "date_resolution": row[8],
+            "user_id": row[9]
+        }
+        tickets.append(ticket)
+
     return jsonify(tickets)
 
 if __name__ == '__main__':

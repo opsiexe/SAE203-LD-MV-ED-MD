@@ -10,8 +10,8 @@
         </div>
 
         <div class="dropdown" v-if="isUserMenuOpen">
-          <a href="#/mytickets" class="menu-item">Mes tickets</a>
-          <a href="#" class="menu-item">Nouveau</a>
+          <a href="/mytickets" class="menu-item">Mes tickets</a>
+          <a href="/newtickets" class="menu-item">Nouveau</a>
           <a href="#" class="menu-item">Se déconnecter</a>
         </div>
       </div>

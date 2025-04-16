@@ -1,6 +1,7 @@
 <script setup>
 import navbar from './components/navbar.vue'
 import mytickets from './components/mytickets.vue'
+import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
 
@@ -8,11 +9,11 @@ const tickets = ref([])
 const route = useRoute();
 
 onMounted(async () => {
-  const res = await fetch('http://localhost:5000/api/tickets')
-  if (res.ok) {
-    tickets.value = await res.json();
-  } else {
-    console.error('Failed to fetch tickets:', res.statusText);
+  try {
+    const res = await axios.get('http://localhost:5000/api/tickets')
+    tickets.value = await res.data;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des tickets:', error);
   }
 })
 </script>

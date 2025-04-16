@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS tickets (
     statut TEXT DEFAULT 'pending',
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_modification TIMESTAMP,
-    date_resolution TIMESTAMP
+    date_resolution TIMESTAMP,
+    user_id INTEGER NOT NULL
 );
 """)
 

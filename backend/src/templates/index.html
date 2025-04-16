@@ -20,7 +20,8 @@
 
     <table>
         <tr>
-            <th>ID</th> 
+            <th>ID</th>
+            <th>Utilisateur</th>
             <th>Object</th>
             <th>Description</th>
             <th>Email</th>
@@ -33,11 +34,12 @@
         {% for ticket in tickets %}
         <tr>
             <td>{{ ticket[0] }}</td>
+            <td>{{ ticket[9] }}</td>
             <td>{{ ticket[1] }}</td>
             <td>{{ ticket[2] }}</td>
             <td>{{ ticket[3] }}</td>
             <td>
-                {% if ticket[5] %}
+                {% if ticket[4] %}
                     <a href="{{ ticket[5] }}" target="_blank">
                         <img src="{{  ticket [5] }}" width="100">
                     </a>
@@ -52,7 +54,7 @@
                     Inconnue
                 {% endif %}
             </td>
-            <td>{{ ticket[4] }}</td>
+            <td>{{ ticket[5] }}</td>
             <td>
                 <form method="POST" action="{{ url_for('send_email', ticket_id=ticket[0]) }}">
                     <input type="hidden" name="email" value="{{ ticket[3] }}">
@@ -64,10 +66,14 @@
                 <form method="POST" action="{{ url_for('delete_ticket', ticket_id=ticket[0]) }}"  onsubmit="return confirm('Supprimer ce ticket ?')">
                     <button type="submit">Supprimer</button>
                 </form>
-                {% if ticket[4] != 'fini' %}
+                {% if ticket[5] != 'fini' %}
                     <form method="POST" action="{{ url_for('mark_finished', ticket_id=ticket[0]) }}">
                         <button type="submit">Marquer comme fini</button>
                     </form>
+                {% elif ticket[5] == 'fini'%}
+                    <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
+                        <button type="submit">Marquer comme ouvert</button>
+                    </form>"
                 {% endif %}
             </td>
         </tr>
