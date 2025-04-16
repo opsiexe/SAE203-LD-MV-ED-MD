@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask_cors import CORS
 from email.mime.text import MIMEText
 import psycopg2
 import smtplib
@@ -15,6 +16,7 @@ def get_db_connection():
 
 app = Flask(__name__)
 app.secret_key = "dev"
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
@@ -68,6 +70,16 @@ def send_email(ticket_id):
         flash(f"Erreur lors de l'envoi du mail : {str(e)}")
     
     return redirect(url_for("index"))
+
+@app.route('/api/tickets', methods=["GET"])
+def api_tickets():
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM tickets;')
+    tickets = cur.fetchall()
+    cur.close()
+    conn.close()
+    return jsonify(tickets)
 
 if __name__ == '__main__':
     app.run(debug=True)

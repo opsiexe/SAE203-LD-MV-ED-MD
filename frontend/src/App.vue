@@ -1,20 +1,27 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import navbar from './components/navbar.vue'
+import mytickets from './components/mytickets.vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router';
+
+const tickets = ref([])
+const route = useRoute();
+
+onMounted(async () => {
+  const res = await fetch('http://localhost:5000/api/tickets')
+  if (res.ok) {
+    tickets.value = await res.json();
+  } else {
+    console.error('Failed to fetch tickets:', res.statusText);
+  }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div>
+    <navbar />
+    <mytickets v-if="route.name === 'mytickets'" />
+  </div>
 </template>
 
 <style scoped>

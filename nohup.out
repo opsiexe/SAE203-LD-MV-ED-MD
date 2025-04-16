@@ -1,104 +1,366 @@
-Usage: flask run [OPTIONS]
-Try 'flask run --help' for help.
-
-Error: Could not import 'app'.
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
-127.0.0.1 - - [15/Apr/2025 18:43:14] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [15/Apr/2025 18:43:15] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
-127.0.0.1 - - [15/Apr/2025 18:43:31] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [15/Apr/2025 18:43:31] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [15/Apr/2025 18:43:32] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
-127.0.0.1 - - [15/Apr/2025 18:43:32] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
- * Serving Flask app 'backend/src/app'
- * Debug mode: off
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
-[33mPress CTRL+C to quit[0m
 
 > vue-project@0.0.0 dev
 > vite --host
 
+11:02:10 AM [vite] (client) Re-optimizing dependencies because lockfile has changed
 
-  VITE v6.2.6  ready in 479 ms
+  VITE v6.2.6  ready in 496 ms
 
   ➜  Local:   http://localhost:5173/
-  ➜  Network: http://10.0.1.45:5173/
+  ➜  Network: http://10.0.0.243:5173/
   ➜  Network: http://172.17.0.1:5173/
   ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
   ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+11:02:42 AM [vite] (client) hmr update /src/components/navbar.vue
+11:03:55 AM [vite] (client) hmr update /src/components/navbar.vue
+11:03:56 AM [vite] Internal server error: Failed to resolve import "@awesome.me/kit-KIT_CODE/icons" from "src/components/navbar.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:34
+  13 |  /* Injection by vite-plugin-vue-inspector End */
+  14 |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  15 |  import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'
+     |                                   ^
+  16 |  
+  17 |  const __default__ = {
+      at TransformPluginContext._formatLog (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47897:41)
+      at TransformPluginContext.error (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47894:16)
+      at normalizeUrl (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46027:23)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46146:37
+      at async Promise.all (index 2)
+      at async TransformPluginContext.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46073:7)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47692:18)
+      at async loadAndTransform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:41327:27)
+      at async viteTransformMiddleware (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:42807:24)
+11:04:07 AM [vite] (client) hmr update /src/App.vue
+11:04:08 AM [vite] (client) Pre-transform error: Failed to resolve import "@awesome.me/kit-KIT_CODE/icons" from "src/components/navbar.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:34
+  14 |  /* Injection by vite-plugin-vue-inspector End */
+  15 |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  16 |  import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'
+     |                                   ^
+  17 |  
+  18 |  const __default__ = {
+11:04:08 AM [vite] Internal server error: Failed to resolve import "@awesome.me/kit-KIT_CODE/icons" from "src/components/navbar.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:34
+  14 |  /* Injection by vite-plugin-vue-inspector End */
+  15 |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  16 |  import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'
+     |                                   ^
+  17 |  
+  18 |  const __default__ = {
+      at TransformPluginContext._formatLog (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47897:41)
+      at TransformPluginContext.error (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47894:16)
+      at normalizeUrl (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46027:23)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46146:37
+      at async Promise.all (index 2)
+      at async TransformPluginContext.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46073:7)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47692:18)
+      at async loadAndTransform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:41327:27)
+      at async viteTransformMiddleware (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:42807:24)
+11:04:11 AM [vite] Internal server error: Failed to resolve import "@awesome.me/kit-KIT_CODE/icons" from "src/components/navbar.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:34
+  14 |  /* Injection by vite-plugin-vue-inspector End */
+  15 |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  16 |  import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'
+     |                                   ^
+  17 |  
+  18 |  const __default__ = {
+      at TransformPluginContext._formatLog (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47897:41)
+      at TransformPluginContext.error (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47894:16)
+      at normalizeUrl (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46027:23)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46146:37
+      at async Promise.all (index 2)
+      at async TransformPluginContext.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46073:7)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47692:18)
+      at async loadAndTransform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:41327:27)
+      at async viteTransformMiddleware (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:42807:24)
+11:05:21 AM [vite] (client) hmr update /src/App.vue
+11:06:40 AM [vite] (client) Pre-transform error: [vue/compiler-sfc] Unexpected token, expected "," (3:17)
 
-> vue-project@0.0.0 dev
-> vite --host
+/workspaces/SAE203/frontend/src/components/navbar.vue
+1  |  <script setup>
+2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+   |                   ^
+4  |  </script>
+5  |  
+  Plugin: vite:vue
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:17
+  1  |  <script setup>
+  2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+     |     ^
+  4  |  </script>
+  5  |  
+11:06:41 AM [vite] Internal server error: [vue/compiler-sfc] Unexpected token, expected "," (3:17)
 
+/workspaces/SAE203/frontend/src/components/navbar.vue
+1  |  <script setup>
+2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+   |                   ^
+4  |  </script>
+5  |  
+  Plugin: vite:vue
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:17
+  1  |  <script setup>
+  2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+     |     ^
+  4  |  </script>
+  5  |  
+      at constructor (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:360:19)
+      at Parser.raise (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3338:19)
+      at Parser.unexpected (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3358:16)
+      at Parser.expect (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3668:12)
+      at Parser.parseNamedImportSpecifiers (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:14055:14)
+      at Parser.parseImportSpecifiersAndAfter (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:13902:37)
+      at Parser.parseImport (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:13895:17)
+      at Parser.parseStatementContent (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12540:27)
+      at Parser.parseStatementLike (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12432:17)
+      at Parser.parseModuleItem (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12409:17)
+11:06:52 AM [vite] Internal server error: [vue/compiler-sfc] Unexpected token, expected "," (3:17)
 
-  VITE v6.2.6  ready in 469 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: http://10.0.1.45:5173/
-  ➜  Network: http://172.17.0.1:5173/
-  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
-  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+/workspaces/SAE203/frontend/src/components/navbar.vue
+1  |  <script setup>
+2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+   |                   ^
+4  |  </script>
+5  |  
+  Plugin: vite:vue
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue:3:17
+  1  |  <script setup>
+  2  |  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+  3  |  import { facircle-user } from "@fortawesome/free-solid-svg-icons"
+     |     ^
+  4  |  </script>
+  5  |  
+      at constructor (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:360:19)
+      at Parser.raise (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3338:19)
+      at Parser.unexpected (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3358:16)
+      at Parser.expect (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:3668:12)
+      at Parser.parseNamedImportSpecifiers (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:14055:14)
+      at Parser.parseImportSpecifiersAndAfter (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:13902:37)
+      at Parser.parseImport (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:13895:17)
+      at Parser.parseStatementContent (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12540:27)
+      at Parser.parseStatementLike (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12432:17)
+      at Parser.parseModuleItem (/workspaces/SAE203/frontend/node_modules/@babel/parser/lib/index.js:12409:17)
  * Serving Flask app 'backend/src/app'
  * Debug mode: off
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5000
- * Running on http://10.0.1.45:5000
+ * Running on http://10.0.2.71:5000
 [33mPress CTRL+C to quit[0m
+127.0.0.1 - - [16/Apr/2025 12:51:38] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 12:51:38] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [16/Apr/2025 12:51:39] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 12:52:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 12:52:10] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
 
 > vue-project@0.0.0 dev
 > vite --host
 
+12:53:25 PM [vite] (client) Re-optimizing dependencies because lockfile has changed
+
+  VITE v6.2.6  ready in 732 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.0.2.71:5173/
+  ➜  Network: http://172.17.0.1:5173/
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+12:57:03 PM [vite] (client) hmr update /src/components/navbar.vue
+12:58:07 PM [vite] (client) page reload src/main.js
+12:58:08 PM [vite] (client) ✨ new dependencies optimized: @fortawesome/free-solid-svg-icons
+12:58:08 PM [vite] (client) ✨ optimized dependencies changed. reloading
+1:01:49 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+1:03:00 PM [vite] (client) hmr update /src/components/navbar.vue
+1:03:32 PM [vite] (client) hmr update /src/components/navbar.vue
+
+> vue-project@0.0.0 dev
+> vite --host
+
+Port 5173 is in use, trying another one...
 
   VITE v6.2.6  ready in 481 ms
 
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: http://10.0.2.71:5174/
+  ➜  Network: http://172.17.0.1:5174/
+  ➜  Vue DevTools: Open http://localhost:5174/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+ * Serving Flask app 'backend/src/app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.0.99:5000
+[33mPress CTRL+C to quit[0m
+
+> vue-project@0.0.0 dev
+> vite --host
+
+
+  VITE v6.2.6  ready in 2238 ms
+
   ➜  Local:   http://localhost:5173/
-  ➜  Network: http://10.0.1.45:5173/
+  ➜  Network: http://10.0.0.99:5173/
   ➜  Network: http://172.17.0.1:5173/
   ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
   ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
-127.0.0.1 - - [15/Apr/2025 19:01:46] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [15/Apr/2025 19:01:47] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [16/Apr/2025 16:15:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 16:15:37] "GET /static/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 16:15:38] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 16:15:53] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 16:15:53] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+4:16:08 PM [vite] (client) page reload src/main.js
+4:28:19 PM [vite] (client) hmr update /src/components/navbar.vue
+4:28:34 PM [vite] (client) hmr update /src/components/navbar.vue
+4:28:39 PM [vite] (client) hmr update /src/components/navbar.vue
+4:28:52 PM [vite] (client) hmr update /src/components/navbar.vue
+4:30:35 PM [vite] (client) hmr update /src/components/navbar.vue
+4:35:55 PM [vite] (client) hmr update /src/components/navbar.vue
+4:36:02 PM [vite] (client) hmr update /src/components/navbar.vue
+4:36:08 PM [vite] (client) hmr update /src/components/navbar.vue
+4:36:13 PM [vite] (client) hmr update /src/components/navbar.vue
+4:36:23 PM [vite] (client) hmr update /src/components/navbar.vue
+4:42:45 PM [vite] (client) hmr update /src/components/navbar.vue
+4:42:47 PM [vite] (client) ✨ new dependencies optimized: vue-burger-menu
+4:42:47 PM [vite] (client) ✨ optimized dependencies changed. reloading
+4:44:18 PM [vite] (client) hmr update /src/components/navbar.vue
+4:44:36 PM [vite] (client) hmr update /src/components/navbar.vue
+4:45:30 PM [vite] (client) hmr update /src/components/navbar.vue
+4:47:35 PM [vite] (client) hmr update /src/components/navbar.vue
+4:49:20 PM [vite] (client) hmr update /src/components/navbar.vue
+4:50:39 PM [vite] (client) hmr update /src/components/navbar.vue
+4:54:37 PM [vite] (client) hmr update /src/components/navbar.vue
+4:57:45 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+Unable to resolve `@import "vue-burger-menu/dist/vue-burger-menu.css"` from /workspaces/SAE203/frontend/src/components
+4:57:46 PM [vite] (client) Pre-transform error: [postcss] ENOENT: no such file or directory, open 'vue-burger-menu/dist/vue-burger-menu.css'
+  Plugin: vite:css
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue?vue&type=style&index=0&lang.css:undefined:NaN
+Unable to resolve `@import "vue-burger-menu/dist/vue-burger-menu.css"` from /workspaces/SAE203/frontend/src/components
+4:57:46 PM [vite] Internal server error: [postcss] ENOENT: no such file or directory, open 'vue-burger-menu/dist/vue-burger-menu.css'
+  Plugin: vite:css
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css:undefined:NaN
+  
+Unable to resolve `@import "vue-burger-menu/dist/vue-burger-menu.css"` from /workspaces/SAE203/frontend/src/components
+4:57:46 PM [vite] Internal server error: [postcss] ENOENT: no such file or directory, open 'vue-burger-menu/dist/vue-burger-menu.css'
+  Plugin: vite:css
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue?vue&type=style&index=0&lang.css:undefined:NaN
+  
+5:01:55 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:02:56 PM [vite] (client) hmr update /src/components/navbar.vue
+5:04:38 PM [vite] (client) hmr update /src/components/navbar.vue
+5:05:45 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:15:25 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:17:50 PM [vite] (client) hmr update /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css, /src/components/navbar.vue?vue&type=style&index=1&scoped=a42d58fd&lang.css
+Unable to resolve `@import "vue-burger-menu/dist/vue-burger-menu.css"` from /workspaces/SAE203/frontend/src/components
+5:17:50 PM [vite] Internal server error: [postcss] ENOENT: no such file or directory, open 'vue-burger-menu/dist/vue-burger-menu.css'
+  Plugin: vite:css
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css:undefined:NaN
+  
+5:18:24 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:20:03 PM [vite] (client) hmr update /src/components/navbar.vue
+5:23:05 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:25:23 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:28:10 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:29:05 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:33:44 PM [vite] (client) hmr update /src/components/navbar.vue
+5:34:30 PM [vite] (client) hmr update /src/components/navbar.vue
+5:41:39 PM [vite] (client) hmr update /src/components/navbar.vue
+5:49:57 PM [vite] (client) hmr update /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:50:12 PM [vite] (client) hmr update /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:50:19 PM [vite] (client) hmr update /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+5:52:04 PM [vite] (client) hmr update /src/components/navbar.vue
+5:54:20 PM [vite] (client) hmr update /src/components/navbar.vue
+5:55:09 PM [vite] (client) hmr update /src/components/navbar.vue
+6:01:40 PM [vite] (client) hmr update /src/components/navbar.vue, /src/components/navbar.vue?vue&type=style&index=0&scoped=a42d58fd&lang.css
+6:02:01 PM [vite] (client) hmr update /src/components/navbar.vue
+6:04:23 PM [vite] (client) hmr update /src/components/navbar.vue
+6:05:50 PM [vite] (client) hmr update /src/components/navbar.vue
+6:06:03 PM [vite] (client) hmr update /src/components/navbar.vue
+6:06:45 PM [vite] (client) hmr update /src/components/navbar.vue
+6:06:54 PM [vite] (client) hmr update /src/components/navbar.vue
+6:06:59 PM [vite] (client) hmr update /src/components/navbar.vue
+6:07:04 PM [vite] (client) hmr update /src/components/navbar.vue
+6:07:11 PM [vite] (client) hmr update /src/components/navbar.vue
+6:07:14 PM [vite] (client) hmr update /src/components/navbar.vue
+6:07:17 PM [vite] (client) hmr update /src/components/navbar.vue
+127.0.0.1 - - [16/Apr/2025 18:17:47] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 18:17:47] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+127.0.0.1 - - [16/Apr/2025 18:17:48] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+6:20:56 PM [vite] (client) hmr update /src/App.vue
+6:21:39 PM [vite] (client) hmr update /src/App.vue
+6:21:39 PM [vite] (client) Pre-transform error: At least one <template> or <script> is required in a single file component. /workspaces/SAE203/frontend/src/components/mytickets.vue
+  Plugin: vite:vue
+  File: /workspaces/SAE203/frontend/src/components/mytickets.vue
+6:21:39 PM [vite] Internal server error: At least one <template> or <script> is required in a single file component. /workspaces/SAE203/frontend/src/components/mytickets.vue
+  Plugin: vite:vue
+  File: /workspaces/SAE203/frontend/src/components/mytickets.vue
+      at Object.parse$1 [as parse] (/workspaces/SAE203/frontend/node_modules/@vue/compiler-sfc/dist/compiler-sfc.cjs.js:1864:7)
+      at createDescriptor (file:///workspaces/SAE203/frontend/node_modules/@vitejs/plugin-vue/dist/index.mjs:71:43)
+      at transformMain (file:///workspaces/SAE203/frontend/node_modules/@vitejs/plugin-vue/dist/index.mjs:2421:34)
+      at TransformPluginContext.transform (file:///workspaces/SAE203/frontend/node_modules/@vitejs/plugin-vue/dist/index.mjs:3024:16)
+      at file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:26
+      at plugin.<computed> (file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1115:14)
+      at EnvironmentPluginContainer.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47693:19)
+      at async loadAndTransform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:41327:27)
+6:22:27 PM [vite] (client) Pre-transform error: Failed to resolve import "axios" from "src/components/mytickets.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/mytickets.vue:16:19
+  13 |  /* Injection by vite-plugin-vue-inspector End */
+  14 |  
+  15 |  import axios from 'axios';
+     |                     ^
+  16 |  
+  17 |  const _sfc_main = {
+6:22:28 PM [vite] Internal server error: Failed to resolve import "axios" from "src/components/mytickets.vue". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /workspaces/SAE203/frontend/src/components/mytickets.vue:16:19
+  13 |  /* Injection by vite-plugin-vue-inspector End */
+  14 |  
+  15 |  import axios from 'axios';
+     |                     ^
+  16 |  
+  17 |  const _sfc_main = {
+      at TransformPluginContext._formatLog (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47897:41)
+      at TransformPluginContext.error (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47894:16)
+      at normalizeUrl (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46027:23)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46146:37
+      at async Promise.all (index 1)
+      at async TransformPluginContext.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:46073:7)
+      at async file:///workspaces/SAE203/frontend/node_modules/vite-plugin-inspect/dist/index.mjs:1128:17
+      at async EnvironmentPluginContainer.transform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:47692:18)
+      at async loadAndTransform (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:41327:27)
+      at async viteTransformMiddleware (file:///workspaces/SAE203/frontend/node_modules/vite/dist/node/chunks/dep-Bid9ssRr.js:42807:24)
+6:23:40 PM [vite] (client) error while updating dependencies:
+Error: ENOENT: no such file or directory, open '/workspaces/SAE203/node_modules/vue-burger-menu/dist/vue-burger-menu.common.js'
+6:24:46 PM [vite] (client) hmr update /src/components/mytickets.vue
+6:24:50 PM [vite] (client) error while updating dependencies:
+Error: ENOENT: no such file or directory, open '/workspaces/SAE203/node_modules/vue-burger-menu/dist/vue-burger-menu.common.js'
+6:25:33 PM [vite] (client) page reload src/main.js
+6:27:12 PM [vite] (client) hmr update /src/App.vue
+127.0.0.1 - - [16/Apr/2025 18:28:48] "[33mGET /api/ticket HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 18:28:54] "[33mGET /api/tickets HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 18:29:50] "[33mGET /api/tickets HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 18:31:44] "[33mGET /api/tickets HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 18:32:10] "[33mGET /api/tickets HTTP/1.1[0m" 404 -
+127.0.0.1 - - [16/Apr/2025 18:32:13] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [16/Apr/2025 18:32:43] "[33mGET /api/tickets HTTP/1.1[0m" 404 -
+6:38:33 PM [vite] (client) hmr update /src/components/mytickets.vue
+6:38:41 PM [vite] (client) error while updating dependencies:
+Error: ENOENT: no such file or directory, open '/workspaces/SAE203/node_modules/vue-burger-menu/dist/vue-burger-menu.common.js'
+6:38:57 PM [vite] (client) hmr update /src/components/navbar.vue
+6:43:15 PM [vite] (client) hmr update /src/components/mytickets.vue
+6:43:21 PM [vite] (client) error while updating dependencies:
+Error: ENOENT: no such file or directory, open '/workspaces/SAE203/node_modules/vue-burger-menu/dist/vue-burger-menu.common.js'
+6:46:07 PM [vite] (client) hmr update /src/components/mytickets.vue
