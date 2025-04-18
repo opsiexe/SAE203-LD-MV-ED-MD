@@ -39,7 +39,7 @@ tu devrait avoir accès a ta base de donnée
 
 ### 4. Accéder a la prévisualisation
 
-Sur l'editeur web codespace, a coter du terminal tu devrait un onglet `port` clique dessu tu devrait avoir 3 port d'ouvert :
+Sur VScode, à coter du terminal tu devrait voir un onglet `port` clique dessus tu devrait avoir 3 port d'ouvert :
 
 | Port | Fonction             |
 |------|----------------------|
@@ -47,7 +47,7 @@ Sur l'editeur web codespace, a coter du terminal tu devrait un onglet `port` cli
 | 5173 | Application Frontend |
 | 5433 | Serveur PostgreSQL   |
 
-Vous aurez juste a cliquer sur le lien.
+Vous aurez juste a cliquer un des port pour acceder a la prévisualisation 
 
 **⚠️Les lien sont disponible que sur l'interface web du Codespace sinon c'est des adresses localhost qui ne vont bien sur pas fonctionner !**
 
