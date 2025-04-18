@@ -1700,3 +1700,218 @@ TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
 127.0.0.1 - - [17/Apr/2025 05:35:19] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
 127.0.0.1 - - [17/Apr/2025 05:35:19] "GET /api/tickets HTTP/1.1" 200 -
 127.0.0.1 - - [17/Apr/2025 05:35:19] "GET /api/tickets HTTP/1.1" 200 -
+5:41:18 AM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+5:41:52 AM [vite] (client) hmr update /src/components/mytickets.vue?vue&type=style&index=0&scoped=a8db002c&lang.css
+127.0.0.1 - - [17/Apr/2025 05:42:06] "[32mPOST /mark_open/1 HTTP/1.1[0m" 302 -
+127.0.0.1 - - [17/Apr/2025 05:42:07] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [17/Apr/2025 05:42:07] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2025-04-17 05:42:14,528] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [17/Apr/2025 05:42:14] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+[2025-04-17 05:42:14,804] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [17/Apr/2025 05:42:14] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [17/Apr/2025 05:42:14] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [17/Apr/2025 05:42:15] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [17/Apr/2025 05:42:22] "[32mPOST /delete_ticket/3 HTTP/1.1[0m" 302 -
+127.0.0.1 - - [17/Apr/2025 05:42:22] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [17/Apr/2025 05:42:22] "[36mGET /static/style.css HTTP/1.1[0m" 304 -
+[2025-04-17 05:42:26,567] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [17/Apr/2025 05:42:26] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+[2025-04-17 05:42:26,570] ERROR in app: Exception on /api/tickets [OPTIONS]
+Traceback (most recent call last):
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vscode/.local/lib/python3.11/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspaces/SAE203/backend/src/app.py", line 88, in get_tickets
+    response = app.make_response('', 200)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Flask.make_response() takes 2 positional arguments but 3 were given
+127.0.0.1 - - [17/Apr/2025 05:42:26] "[35m[1mOPTIONS /api/tickets HTTP/1.1[0m" 500 -
+127.0.0.1 - - [17/Apr/2025 05:42:27] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [17/Apr/2025 05:42:27] "GET /api/tickets HTTP/1.1" 200 -
+ * Serving Flask app 'backend/src/app'
+ * Debug mode: off
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.0.1.245:5000
+[33mPress CTRL+C to quit[0m
+
+> vue-project@0.0.0 dev
+> vite --host
+
+
+  VITE v6.2.6  ready in 1798 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://10.0.1.245:5173/
+  ➜  Network: http://172.17.0.1:5173/
+  ➜  Vue DevTools: Open http://localhost:5173/__devtools__/ as a separate window
+  ➜  Vue DevTools: Press Alt(⌥)+Shift(⇧)+D in App to toggle the Vue DevTools
+127.0.0.1 - - [18/Apr/2025 06:28:14] "GET /?vscodeBrowserReqId=1744957692237 HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:28:14] "GET /static/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:28:24] "GET /api/tickets HTTP/1.1" 200 -
+6:29:07 AM [vite] (client) hmr update /src/App.vue
+127.0.0.1 - - [18/Apr/2025 06:29:08] "GET /api/tickets HTTP/1.1" 200 -
+6:29:30 AM [vite] (client) hmr update /src/components/navbar.vue
+127.0.0.1 - - [18/Apr/2025 06:29:57] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:29:58] "GET /api/tickets HTTP/1.1" 200 -
+6:30:23 AM [vite] (client) hmr update /src/components/mytickets.vue
+127.0.0.1 - - [18/Apr/2025 06:30:24] "GET /api/tickets HTTP/1.1" 200 -
+6:38:05 AM [vite] vite.config.js changed, restarting server...
+6:38:05 AM [vite] (client) Re-optimizing dependencies because lockfile has changed
+6:38:05 AM [vite] server restarted.
+127.0.0.1 - - [18/Apr/2025 06:38:08] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:38:08] "GET /api/tickets HTTP/1.1" 200 -
+6:40:53 AM [vite] (client) hmr update /src/assets/main.css
+6:43:16 AM [vite] (client) hmr update /src/assets/main.css
+6:43:20 AM [vite] (client) hmr update /src/assets/main.css
+6:43:57 AM [vite] (client) page reload src/main.js
+127.0.0.1 - - [18/Apr/2025 06:43:58] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:43:59] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 06:45:17] "GET /api/tickets HTTP/1.1" 200 -
+6:47:00 AM [vite] (client) hmr update /src/App.vue, /src/assets/tailwind.css
+6:47:10 AM [vite] (client) hmr update /src/App.vue, /src/assets/tailwind.css
+6:47:27 AM [vite] (client) hmr update /src/App.vue, /src/assets/tailwind.css
+6:48:47 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:49:05 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:49:22 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:49:55 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:50:16 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:50:26 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:52:12 AM [vite] (client) hmr update /src/assets/main.css, /src/assets/tailwind.css
+6:52:28 AM [vite] (client) hmr update /src/assets/main.css, /src/assets/tailwind.css
+6:56:02 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+6:56:45 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+127.0.0.1 - - [18/Apr/2025 06:57:27] "GET /api/tickets HTTP/1.1" 200 -
+6:57:57 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:02:35 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:02:35 AM [vite] Internal server error: Element is missing end tag.
+  Plugin: vite-plugin-vue-inspector
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue
+      at createCompilerError (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:1364:17)
+      at emitError (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2949:5)
+      at Object.onclosetag (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2308:13)
+      at Tokenizer.stateInClosingTagName (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:785:16)
+      at Tokenizer.parse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:1143:16)
+      at Object.baseParse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2988:13)
+      at parse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-dom/dist/compiler-dom.cjs.js:904:23)
+      at result (file:///workspaces/SAE203/frontend/node_modules/vite-plugin-vue-inspector/dist/index.mjs:29:21)
+      at new Promise (<anonymous>)
+      at compileSFCTemplate (file:///workspaces/SAE203/frontend/node_modules/vite-plugin-vue-inspector/dist/index.mjs:26:24)
+7:02:47 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:04:40 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:05:12 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:06:26 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:06:26 AM [vite] Internal server error: Element is missing end tag.
+  Plugin: vite-plugin-vue-inspector
+  File: /workspaces/SAE203/frontend/src/components/navbar.vue
+      at createCompilerError (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:1364:17)
+      at emitError (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2949:5)
+      at Object.onclosetag (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2308:13)
+      at Tokenizer.stateInClosingTagName (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:785:16)
+      at Tokenizer.parse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:1143:16)
+      at Object.baseParse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-core/dist/compiler-core.cjs.js:2988:13)
+      at parse (/workspaces/SAE203/frontend/node_modules/@vue/compiler-dom/dist/compiler-dom.cjs.js:904:23)
+      at result (file:///workspaces/SAE203/frontend/node_modules/vite-plugin-vue-inspector/dist/index.mjs:29:21)
+      at new Promise (<anonymous>)
+      at compileSFCTemplate (file:///workspaces/SAE203/frontend/node_modules/vite-plugin-vue-inspector/dist/index.mjs:26:24)
+7:06:41 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:08:09 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:08:26 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:08:29 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:10:33 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:12:58 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:14:26 AM [vite] (client) page reload src/main.js
+127.0.0.1 - - [18/Apr/2025 07:14:28] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 07:14:37] "GET /api/tickets HTTP/1.1" 200 -
+7:17:56 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:19:37 AM [vite] (client) page reload src/main.js
+127.0.0.1 - - [18/Apr/2025 07:19:39] "GET /api/tickets HTTP/1.1" 200 -
+7:23:58 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+127.0.0.1 - - [18/Apr/2025 07:24:52] "GET /api/tickets HTTP/1.1" 200 -
+7:26:29 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:27:50 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:28:03 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:29:17 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+127.0.0.1 - - [18/Apr/2025 07:29:20] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 07:29:20] "GET /api/tickets HTTP/1.1" 200 -
+7:32:08 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:32:18 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+7:33:04 AM [vite] (client) hmr update /src/components/navbar.vue, /src/assets/tailwind.css
+127.0.0.1 - - [18/Apr/2025 07:33:16] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 07:33:17] "GET /api/tickets HTTP/1.1" 200 -
+127.0.0.1 - - [18/Apr/2025 07:33:23] "GET /api/tickets HTTP/1.1" 200 -
+7:37:28 AM [vite] (client) page reload src/main.js
+127.0.0.1 - - [18/Apr/2025 07:37:30] "GET /api/tickets HTTP/1.1" 200 -
