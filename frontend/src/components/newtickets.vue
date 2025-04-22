@@ -158,7 +158,7 @@ export default {
                 this.clearSelectedFile();
 
                 // Redirection vers la liste des tickets
-                this.$router.push('/tickets');
+                this.$router.push('/mytickets');
             } catch (error) {
                 console.error('Erreur lors de la création du ticket:', error);
 

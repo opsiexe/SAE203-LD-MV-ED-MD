@@ -1,11 +1,27 @@
 from fileinput import filename
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response, send_from_directory
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response, send_from_directory, session
 from flask_cors import CORS
 from email.mime.text import MIMEText
 import psycopg2
 import smtplib
+import datetime
 import os
+from msal import ConfidentialClientApplication
 from werkzeug.utils import secure_filename
+
+# AZURE AD auth info
+""" CLIENT_ID = "ton-client-id"
+CLIENT_SECRET = "ton-secret"
+TENANT_ID = "ton-tenant-id"
+AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
+REDIRECT_URI = "http://localhost:5000/login/callback"
+SCOPE = ["User.Read"] """
+
+""" msal_app = ConfidentialClientApplication(
+    CLIENT_ID,
+    authority=AUTHORITY,
+    client_credential=CLIENT_SECRET,
+) """
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'uploads')
@@ -49,7 +65,7 @@ def index():
     return render_template('index.html', tickets=tickets)
 
 
-@app.route("/mark_finished/<int:ticket_id>", methods=["POST"])
+@app.route("/api/mark_finished/<int:ticket_id>", methods=["POST"])
 def mark_finished(ticket_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -62,19 +78,27 @@ def mark_finished(ticket_id):
     return redirect(url_for("index"))
 
 
-@app.route("/delete_ticket/<int:ticket_id>", methods=["POST"])
+@app.route("/api/delete_ticket/<int:ticket_id>", methods=["POST"])
 def delete_ticket(ticket_id):
     conn = get_db_connection()
     cur = conn.cursor()
+    cur.execute("SELECT piece_jointe FROM tickets WHERE id = %s", (ticket_id,))
+    result = cur.fetchone()
+    piece_jointe = result[0] if result else None
     cur.execute("DELETE FROM tickets WHERE id = %s", (ticket_id,))
-    flash("Ticket supprimé avec succès.")
     conn.commit()
     cur.close()
     conn.close()
+    if piece_jointe:
+        file_path = os.path.join(UPLOAD_FOLDER, piece_jointe)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    flash("Ticket supprimé avec succès.")
     return redirect(url_for("index"))
 
 
-@app.route("/send_email/<int:ticket_id>", methods=["POST"])
+@app.route("/api/send_email/<int:ticket_id>", methods=["POST"])
 def send_email(ticket_id):
     to_email = request.form["email"]
     message = request.form["message"]
@@ -96,7 +120,7 @@ def send_email(ticket_id):
     return redirect(url_for("index"))
 
 
-@app.route("/mark_open/<int:ticket_id>", methods=["POST"])
+@app.route("/api/mark_open/<int:ticket_id>", methods=["POST"])
 def mark_open(ticket_id):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -214,6 +238,54 @@ def get_tickets():
         tickets.append(ticket)
 
     return jsonify(tickets)
+
+
+""" @app.route('/login')
+def login():
+    auth_url = msal_app.get_authorization_request_url(
+        SCOPE, redirect_uri=REDIRECT_URI)
+    return redirect(auth_url) """
+
+
+""" @app.route('/login/callback')
+def authorized():
+    code = request.args.get('code')
+    result = msal_app.acquire_token_by_authorization_code(
+        code,
+        scopes=SCOPE,
+        redirect_uri=REDIRECT_URI
+    )
+    if 'id_token_claims' in result:
+        user_claims = result['id_token_claims']
+        save_user_to_db(user_claims)
+        session["user"] = user_claims
+        return redirect("http://localhost:5173/")
+    return "Erreur d'authentification", 401 """
+
+
+""" @app.route('/api/user')
+def user_info():
+    return session.get("user", {}), 200 """
+
+
+""" def save_user_to_db(user_claims):
+    conn = get_db_connection()
+    with conn.cursor() as cur:
+        cur.execute(
+            INSERT INTO users (azure_oid, email, name, last_login)
+            VALUES (%s, %s, %s, %s)
+            ON CONFLICT (azure_oid)
+            DO UPDATE SET last_login = EXCLUDED.last_login,
+                          email = EXCLUDED.email,
+                          name = EXCLUDED.name;
+        , (
+            user_claims.get("oid"),
+            user_claims.get("preferred_username"),
+            user_claims.get("name"),
+            datetime.utcnow()
+        ))
+    conn.commit()
+    conn.close() """
 
 
 if __name__ == '__main__':
