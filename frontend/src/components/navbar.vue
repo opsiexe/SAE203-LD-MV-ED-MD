@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed top-0 left-0 w-full shadow z-50">
+  <nav class="navbar top-0 left-0 w-full shadow z-50">
     <div class="navbar-container flex items-center justify-between w-full max-w-screen mx-auto p-4">
       <!-- Lien "Support" aligné à gauche -->
       <a href="/" class="text-lg font-semibold">
@@ -38,7 +38,7 @@
                 <a href="/mytickets" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mes tickets</a>
               </li>
               <li>
-                <a href="/newticket" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Nouveau ticket</a>
+                <a href="/newtickets" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Nouveau ticket</a>
               </li>
               <li>
                 <a href="/profile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mon profil</a>

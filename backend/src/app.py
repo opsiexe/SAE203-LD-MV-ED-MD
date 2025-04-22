@@ -82,7 +82,38 @@ def mark_open(ticket_id):
     conn.close()
     return redirect(url_for("index"))
 
-@app.route('/api/tickets', methods=['GET', 'OPTIONS'])
+@app.route("/api/add_ticket", methods=["POST", "OPTIONS"])
+def add_ticket():
+    if request.method == 'OPTIONS':
+        response = app.make_response('', 200)
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:5173'
+        response.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return
+    
+    object = request.form["objet"]
+    description = request.form["description"]
+    email = request.form["email"]
+    attachment = request.form["piece_jointe"]
+    status = "ouvert"
+    creation_date = request.form["date_creation"]
+    modification_date = request.form["date_modification"]
+    resolution_date = request.form["date_resolution"]
+    user_id = request.form["user_id"]
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO tickets (objet, description, email, piece_jointe, statut, date_creation, date_modification, date_resolution, user_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (object, description, email, attachment, status, creation_date, modification_date, resolution_date, user_id)
+    )
+    conn.commit()
+    cur.close()
+    conn.close()
+    return jsonify({"message": "Ticket ajouté avec succès."})
+
+
+@app.route('/api/gettickets', methods=['GET', 'OPTIONS'])
 def get_tickets():
     if request.method == 'OPTIONS':
         response = app.make_response('', 200)

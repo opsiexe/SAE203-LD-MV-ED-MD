@@ -45,7 +45,7 @@ export default {
   async created() {
     try {
       console.log('Fetching tickets...');
-      const response = await axios.get('http://localhost:5000/api/tickets', {
+      const response = await axios.get('http://localhost:5000/api/gettickets', {
         timeout: 10000,
       });
       this.tickets = response.data.filter(ticket => ticket.user_id === 1);
