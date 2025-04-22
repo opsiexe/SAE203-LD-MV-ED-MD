@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Admin interface tickets Support</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
     <h1>Liste des Tickets</h1>
 
     {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul class="flash-messages">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+    {% if messages %}
+    <ul class="flash-messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% endwith %}
 
     <table>
@@ -38,20 +40,84 @@
             <td>{{ ticket[1] }}</td>
             <td>{{ ticket[2] }}</td>
             <td>{{ ticket[3] }}</td>
-            <td>
+            <td class="piece-jointe">
                 {% if ticket[4] %}
-                    <a href="{{ ticket[5] }}" target="_blank">
-                        <img src="{{  ticket [5] }}" width="100">
-                    </a>
+                <a href="{{ url_for('uploaded_file', filename=ticket[4]) }}" target="_blank" class="piece-jointe-link">
+                    {% if ticket[4].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                    <!-- Preview pour les images -->
+                    <div class="preview-container">
+                        <img src="{{ url_for('uploaded_file', filename=ticket[4]) }}" class="preview-img" alt="Aperçu">
+                    </div>
+                    {% elif ticket[4].lower().endswith('.pdf') %}
+                    <!-- Icône pour PDF -->
+                    <div class="preview-container pdf">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        <span class="file-name">PDF</span>
+                    </div>
+                    {% elif ticket[4].lower().endswith(('.doc', '.docx')) %}
+                    <!-- Icône pour DOC -->
+                    <div class="preview-container doc">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span class="file-name">DOC</span>
+                    </div>
+                    {% elif ticket[4].lower().endswith(('.xls', '.xlsx')) %}
+                    <!-- Icône pour XLS -->
+                    <div class="preview-container xls">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <rect x="8" y="12" width="8" height="8" rx="1"></rect>
+                        </svg>
+                        <span class="file-name">XLS</span>
+                    </div>
+                    {% elif ticket[4].lower().endswith('.txt') %}
+                    <!-- Icône pour TXT -->
+                    <div class="preview-container txt">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                        </svg>
+                        <span class="file-name">TXT</span>
+                    </div>
+                    {% else %}
+                    <!-- Icône générique pour les autres fichiers -->
+                    <div class="preview-container file">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                            <polyline points="13 2 13 9 20 9"></polyline>
+                        </svg>
+                        <span class="file-name">Fichier</span>
+                    </div>
+                    {% endif %}
+                    <div class="filename-tooltip">{{ ticket[4] }}</div>
+                </a>
                 {% else %}
-                    Aucune
+                <div class="no-file">Aucune</div>
                 {% endif %}
             </td>
             <td>
                 {% if ticket[6] %}
-                    {{ ticket[6].strftime('%d/%m/%Y %H:%M') }}
+                {{ ticket[6].strftime('%d/%m/%Y %H:%M') }}
                 {% else %}
-                    Inconnue
+                Inconnue
                 {% endif %}
             </td>
             <td>{{ ticket[5] }}</td>
@@ -63,21 +129,23 @@
                 </form>
             </td>
             <td>
-                <form method="POST" action="{{ url_for('delete_ticket', ticket_id=ticket[0]) }}"  onsubmit="return confirm('Supprimer ce ticket ?')">
+                <form method="POST" action="{{ url_for('delete_ticket', ticket_id=ticket[0]) }}"
+                    onsubmit="return confirm('Supprimer ce ticket ?')">
                     <button type="submit">Supprimer</button>
                 </form>
                 {% if ticket[5] != 'fini' %}
-                    <form method="POST" action="{{ url_for('mark_finished', ticket_id=ticket[0]) }}">
-                        <button type="submit">Marquer comme fini</button>
-                    </form>
+                <form method="POST" action="{{ url_for('mark_finished', ticket_id=ticket[0]) }}">
+                    <button type="submit">Marquer comme fini</button>
+                </form>
                 {% elif ticket[5] == 'fini'%}
-                    <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
-                        <button type="submit">Marquer comme ouvert</button>
-                    </form>"
+                <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
+                    <button type="submit">Marquer comme ouvert</button>
+                </form>"
                 {% endif %}
             </td>
         </tr>
         {% endfor %}
     </table>
 </body>
+
 </html>
