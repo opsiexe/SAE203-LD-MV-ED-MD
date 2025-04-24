@@ -3,6 +3,36 @@ body {
     background-color: #f4f4f4;
 }
 
+.search-filter-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.filter-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}
+
 .container {
     width: 90%;
     margin: auto;
@@ -155,3 +185,4 @@ button:hover {
     color: #999;
     font-style: italic;
 }
+
