@@ -9,13 +9,50 @@
 
 <body>
     <h1>Liste des Tickets</h1>
-    <div class="search-filter-container">
-        <form method="GET" action="{{ url_for('rechercher_tickets') }}">
-            <input type="text" name="search" placeholder="Rechercher un ticket par id, objet ou utilisateur"
-                class="search-input">
-            <button type="submit" class="filter-button">Filtrer</button>
-        </form>
-    </div>
+    <form method="get" action="/" class="search-form">
+        <div>
+            <input type="text" name="keyword" placeholder="Rechercher un mot-clé..."
+                value="{{ request.args.get('keyword', '') }}">
+        </div>
+
+        <div>
+            <label for="filter_by">Filtrer par :</label>
+            <select name="filter_by" id="filter_by">
+                <option value="objet" {% if request.args.get('filter_by')=='objet' %}selected{% endif %}>Objet</option>
+                <option value="description" {% if request.args.get('filter_by')=='description' %}selected{% endif %}>
+                    Description</option>
+                <option value="email" {% if request.args.get('filter_by')=='email' %}selected{% endif %}>Email</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="statut">Statut :</label>
+            <select name="statut" id="statut">
+                <option value="">Tous</option>
+                <option value="ouvert" {% if request.args.get('statut')=='ouvert' %}selected{% endif %}>Ouvert</option>
+                <option value="fini" {% if request.args.get('statut')=='fini' %}selected{% endif %}>Fini</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="order_by">Trier par :</label>
+            <select name="order_by" id="order_by">
+                <option value="date_creation" {% if request.args.get('order_by')=='date_creation' %}selected{% endif %}>
+                    Date de création</option>
+                <option value="date_modification" {% if request.args.get('order_by')=='date_modification' %}selected{%
+                    endif %}>Date de modification</option>
+                <option value="date_resolution" {% if request.args.get('order_by')=='date_resolution' %}selected{% endif
+                    %}>Date de résolution</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">Rechercher</button>
+        </div>
+    </form>
+
+    <hr>
+
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul class="flash-messages">
