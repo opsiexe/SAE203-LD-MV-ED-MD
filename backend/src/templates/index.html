@@ -9,7 +9,12 @@
 
 <body>
     <h1>Liste des Tickets</h1>
-
+    <div class="search-filter-container">
+        <form method="GET" action="#">
+            <input type="text" name="search" placeholder="Rechercher un ticket..." class="search-input">
+            <button type="submit" class="filter-button">Filtrer</button>
+        </form>
+    </div>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul class="flash-messages">
