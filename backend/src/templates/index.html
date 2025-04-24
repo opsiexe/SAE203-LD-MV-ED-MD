@@ -10,8 +10,9 @@
 <body>
     <h1>Liste des Tickets</h1>
     <div class="search-filter-container">
-        <form method="GET" action="#">
-            <input type="text" name="search" placeholder="Rechercher un ticket..." class="search-input">
+        <form method="GET" action="{{ url_for('rechercher_tickets') }}">
+            <input type="text" name="search" placeholder="Rechercher un ticket par id, objet ou utilisateur"
+                class="search-input">
             <button type="submit" class="filter-button">Filtrer</button>
         </form>
     </div>
