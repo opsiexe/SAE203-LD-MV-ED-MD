@@ -228,19 +228,39 @@ def get_tickets():
 
 @app.route('/api/search', methods=['GET'])
 def rechercher_tickets():
-    search_query = request.args.get('search', '').strip()
+    keyword = request.args.get('keyword', '').strip()
+    filter_by = request.args.get('filter_by', 'objet')
+    statut = request.args.get('statut', '')
+    order_by = request.args.get('order_by', 'date_creation')
+
+    # Construction dynamique de la requête SQL
+    query = "SELECT * FROM tickets WHERE 1=1"
+    params = []
+
+    # Filtre par mot-clé et champ sélectionné
+    if keyword:
+        if filter_by == 'objet':
+            query += " AND objet ILIKE %s"
+        elif filter_by == 'description':
+            query += " AND description ILIKE %s"
+        elif filter_by == 'email':
+            query += " AND email ILIKE %s"
+        params.append(f"%{keyword}%")
+
+    # Filtre par statut
+    if statut:
+        query += " AND statut = %s"
+        params.append(statut)
+
+    # Tri
+    if order_by in ['date_creation', 'date_modification', 'date_resolution']:
+        query += f" ORDER BY {order_by} DESC"
+    else:
+        query += " ORDER BY date_creation DESC"
+
     conn = get_db_connection()
     cur = conn.cursor()
-    try:
-        ticket_id = int(search_query)
-    except ValueError:
-        ticket_id = None
-    cur.execute("""
-        SELECT * FROM tickets
-        WHERE (%s IS NOT NULL AND id = %s)
-           OR objet ILIKE %s
-           OR CAST(user_id AS TEXT) ILIKE %s
-    """, (ticket_id, ticket_id, f"%{search_query}%", f"%{search_query}%"))
+    cur.execute(query, params)
     tickets = cur.fetchall()
     cur.close()
     conn.close()
