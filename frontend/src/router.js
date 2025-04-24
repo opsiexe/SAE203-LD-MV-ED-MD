@@ -5,6 +5,11 @@ import LoginPage from './components/login.vue';
 
 const routes = [
   {
+    path: '/',
+    name: 'home',
+    component: LoginPage,
+  },
+  {
     path: '/mytickets',
     name: 'mytickets',
     component: MyTickets,
