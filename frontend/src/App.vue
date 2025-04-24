@@ -2,6 +2,7 @@
 import navbar from './components/navbar.vue'
 import mytickets from './components/mytickets.vue'
 import newtickets from './components/newtickets.vue'
+import loginpage from './components/login.vue'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
@@ -24,5 +25,6 @@ onMounted(async () => {
     <navbar />
     <mytickets v-if="route.name === 'mytickets'" />
     <newtickets v-else-if="route.name === 'newtickets'" />
+    <loginpage v-else-if="route.name === 'loginPage'" />
   </div>
 </template>

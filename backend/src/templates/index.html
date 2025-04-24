@@ -49,12 +49,10 @@
                 {% if ticket[4] %}
                 <a href="{{ url_for('uploaded_file', filename=ticket[4]) }}" target="_blank" class="piece-jointe-link">
                     {% if ticket[4].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
-                    <!-- Preview pour les images -->
                     <div class="preview-container">
                         <img src="{{ url_for('uploaded_file', filename=ticket[4]) }}" class="preview-img" alt="Aperçu">
                     </div>
                     {% elif ticket[4].lower().endswith('.pdf') %}
-                    <!-- Icône pour PDF -->
                     <div class="preview-container pdf">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -67,7 +65,6 @@
                         <span class="file-name">PDF</span>
                     </div>
                     {% elif ticket[4].lower().endswith(('.doc', '.docx')) %}
-                    <!-- Icône pour DOC -->
                     <div class="preview-container doc">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -79,7 +76,6 @@
                         <span class="file-name">DOC</span>
                     </div>
                     {% elif ticket[4].lower().endswith(('.xls', '.xlsx')) %}
-                    <!-- Icône pour XLS -->
                     <div class="preview-container xls">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -90,7 +86,6 @@
                         <span class="file-name">XLS</span>
                     </div>
                     {% elif ticket[4].lower().endswith('.txt') %}
-                    <!-- Icône pour TXT -->
                     <div class="preview-container txt">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -102,7 +97,6 @@
                         <span class="file-name">TXT</span>
                     </div>
                     {% else %}
-                    <!-- Icône générique pour les autres fichiers -->
                     <div class="preview-container file">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -145,7 +139,7 @@
                 {% elif ticket[5] == 'fini'%}
                 <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
                     <button type="submit">Marquer comme ouvert</button>
-                </form>"
+                </form>
                 {% endif %}
             </td>
         </tr>
