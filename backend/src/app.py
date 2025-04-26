@@ -1,4 +1,5 @@
 from fileinput import filename
+from re import search
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response, send_from_directory, session
 from flask_cors import CORS
 from email.mime.text import MIMEText
@@ -6,22 +7,7 @@ import psycopg2
 import smtplib
 import datetime
 import os
-from msal import ConfidentialClientApplication
 from werkzeug.utils import secure_filename
-
-# AZURE AD auth info
-""" CLIENT_ID = "ton-client-id"
-CLIENT_SECRET = "ton-secret"
-TENANT_ID = "ton-tenant-id"
-AUTHORITY = f"https://login.microsoftonline.com/{TENANT_ID}"
-REDIRECT_URI = "http://localhost:5000/login/callback"
-SCOPE = ["User.Read"] """
-
-""" msal_app = ConfidentialClientApplication(
-    CLIENT_ID,
-    authority=AUTHORITY,
-    client_credential=CLIENT_SECRET,
-) """
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'uploads')
@@ -240,52 +226,45 @@ def get_tickets():
     return jsonify(tickets)
 
 
-""" @app.route('/login')
-def login():
-    auth_url = msal_app.get_authorization_request_url(
-        SCOPE, redirect_uri=REDIRECT_URI)
-    return redirect(auth_url) """
+@app.route('/api/search', methods=['GET'])
+def rechercher_tickets():
+    keyword = request.args.get('keyword', '').strip()
+    filter_by = request.args.get('filter_by', 'objet')
+    statut = request.args.get('statut', '')
+    order_by = request.args.get('order_by', 'date_creation')
 
+    # Construction dynamique de la requête SQL
+    query = "SELECT * FROM tickets WHERE 1=1"
+    params = []
 
-""" @app.route('/login/callback')
-def authorized():
-    code = request.args.get('code')
-    result = msal_app.acquire_token_by_authorization_code(
-        code,
-        scopes=SCOPE,
-        redirect_uri=REDIRECT_URI
-    )
-    if 'id_token_claims' in result:
-        user_claims = result['id_token_claims']
-        save_user_to_db(user_claims)
-        session["user"] = user_claims
-        return redirect("http://localhost:5173/")
-    return "Erreur d'authentification", 401 """
+    # Filtre par mot-clé et champ sélectionné
+    if keyword:
+        if filter_by == 'objet':
+            query += " AND objet ILIKE %s"
+        elif filter_by == 'description':
+            query += " AND description ILIKE %s"
+        elif filter_by == 'email':
+            query += " AND email ILIKE %s"
+        params.append(f"%{keyword}%")
 
+    # Filtre par statut
+    if statut:
+        query += " AND statut = %s"
+        params.append(statut)
 
-""" @app.route('/api/user')
-def user_info():
-    return session.get("user", {}), 200 """
+    # Tri
+    if order_by in ['date_creation', 'date_modification', 'date_resolution']:
+        query += f" ORDER BY {order_by} DESC"
+    else:
+        query += " ORDER BY date_creation DESC"
 
-
-""" def save_user_to_db(user_claims):
     conn = get_db_connection()
-    with conn.cursor() as cur:
-        cur.execute(
-            INSERT INTO users (azure_oid, email, name, last_login)
-            VALUES (%s, %s, %s, %s)
-            ON CONFLICT (azure_oid)
-            DO UPDATE SET last_login = EXCLUDED.last_login,
-                          email = EXCLUDED.email,
-                          name = EXCLUDED.name;
-        , (
-            user_claims.get("oid"),
-            user_claims.get("preferred_username"),
-            user_claims.get("name"),
-            datetime.utcnow()
-        ))
-    conn.commit()
-    conn.close() """
+    cur = conn.cursor()
+    cur.execute(query, params)
+    tickets = cur.fetchall()
+    cur.close()
+    conn.close()
+    return render_template('index.html', tickets=tickets)
 
 
 if __name__ == '__main__':
