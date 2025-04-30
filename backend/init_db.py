@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS tickets (
     user_id INTEGER NOT NULL
 );
 CREATE TABLE IF NOT EXISTS technicien (
-    id SERIAL PRIMARY KEY;
-    nom TEXT NOT NULL;
-    prenom TEXT NOT NULL;
+    id SERIAL PRIMARY KEY,
+    nom TEXT NOT NULL,
+    prenom TEXT NOT NULL,
 );
 """)
 
