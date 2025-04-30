@@ -73,8 +73,9 @@
             <th>Pièce jointe</th>
             <th>Date de crétaion</th>
             <th>Status</th>
-            <th>Reponse</th>
+            <th>Commentaire</th>
             <th>Action</th>
+            
         </tr>
         {% for ticket in tickets %}
         <tr>
@@ -159,11 +160,32 @@
             </td>
             <td>{{ ticket[5] }}</td>
             <td>
-                <form method="POST" action="{{ url_for('send_email', ticket_id=ticket[0]) }}">
-                    <input type="hidden" name="email" value="{{ ticket[3] }}">
-                    <textarea name="message" placeholder="Votre réponse" required></textarea><br>
-                    <button type="submit">Envoyer</button>
-                </form>
+                <!-- Bouton déclencheur -->
+<button type="button" class="btn" onclick="openPopup({{ ticket[0] }})">Accéder à la discussion</button>
+
+<!-- Fenêtre modale cachée -->
+<div id="popup-{{ ticket[0] }}" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup({{ ticket[0] }})">&times;</span>
+        <h2>Discussion avec {{ ticket[3] }}</h2>
+
+        <!-- Exemple de formulaire de discussion -->
+        <form method="POST" action="{{ url_for('send_email', ticket_id=ticket[0]) }}">
+            <input type="hidden" name="email" value="{{ ticket[3] }}">
+            <textarea name="message" placeholder="Votre message..."></textarea>
+            <button type="submit" class="btn">Envoyer</button>
+        </form>
+
+        <!-- Historique de messages ici -->
+        <div class="chat-history">
+            <!-- À générer dynamiquement côté Flask -->
+            <p><strong>Client:</strong> Bonjour, j’ai un souci...</p>
+            <p><strong>Support:</strong> Merci de votre message, on y regarde !</p>
+        </div>
+    </div>
+</div>
+
+
             </td>
             <td>
                 
@@ -172,7 +194,7 @@
                 </form>
                 
                 <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
-                    <label for="status">Changer le statut du ticket :</label>
+                    <ul><label for="status">Changer le statut du ticket :</label></ul>
                     <select name="status" id="status">
                         <option value="nouveau">Nouveau (non lu)</option>
                         <option value="en_cours">En cours (lu, pris en compte)</option>
@@ -204,3 +226,15 @@
 </body>
 
 </html>
+<script>
+    function openPopup(ticketId) {
+        document.getElementById('popup-' + ticketId).style.display = 'flex';
+    }
+    
+    function closePopup(ticketId) {
+        document.getElementById('popup-' + ticketId).style.display = 'none';
+    }
+    </script>
+    
+    
+    
