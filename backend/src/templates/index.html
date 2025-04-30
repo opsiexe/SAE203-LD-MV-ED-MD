@@ -166,19 +166,37 @@
                 </form>
             </td>
             <td>
-                <form method="POST" action="{{ url_for('delete_ticket', ticket_id=ticket[0]) }}"
-                    onsubmit="return confirm('Supprimer ce ticket ?')">
-                    <button type="submit">Supprimer</button>
+                
+                
+                
                 </form>
-                {% if ticket[5] != 'fini' %}
-                <form method="POST" action="{{ url_for('mark_finished', ticket_id=ticket[0]) }}">
-                    <button type="submit">Marquer comme fini</button>
-                </form>
-                {% elif ticket[5] == 'fini'%}
+                
                 <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
-                    <button type="submit">Marquer comme ouvert</button>
+                    <label for="status">Changer le statut du ticket :</label>
+                    <select name="status" id="status">
+                        <option value="nouveau">Nouveau (non lu)</option>
+                        <option value="en_cours">En cours (lu, pris en compte)</option>
+                        <option value="attribue">Attribué</option>
+                        <option value="resolu">Résolu</option>
+                        <option value="cloture">Clôturé</option>
+                    </select>
+                    
+                    <button type="submit">Mettre à jour</button>
+
+
+                    <ul><label for="status">Assigner à un technicien :</label></ul>
+                    <select name="status" id="status">
+                        <option value="technicien 1"> technicien 1</option>
+                        <option value="technicien 2"> technicien 2</option>
+                        <option value="technicien 3">technicien 3</option>
+                        
+                    </select>
+                    
+                    <button type="submit">Assigner</button>
+
                 </form>
-                {% endif %}
+                </form>
+               
             </td>
         </tr>
         {% endfor %}
