@@ -23,6 +23,11 @@ CREATE TABLE IF NOT EXISTS tickets (
     date_resolution TIMESTAMP,
     user_id INTEGER NOT NULL
 );
+CREATE TABLE IF NOT EXISTS technicien (
+    id SERIAL PRIMARY KEY;
+    nom TEXT NOT NULL;
+    prenom TEXT NOT NULL;
+);
 """)
 
 connection.commit()

@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'uploads')
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg',
-                      'jpeg', 'gif', 'doc', 'docx', 'xls', 'xlsx'}
+                      'jpeg'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)

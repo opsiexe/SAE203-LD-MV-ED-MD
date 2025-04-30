@@ -13,7 +13,8 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "cweijan.vscode-database-client2"
       ]
     }
   }
