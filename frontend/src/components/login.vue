@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen pt-[100px] flex justify-center">
+  <div class="min-h-screen flex items-center justify-center">
     <div class="text-center px-4">
       <h1 class="text-4xl font-bold mb-4">Bienvenue sur l’Espace Support</h1>
       <p class="text-lg text-gray-600 mb-10">

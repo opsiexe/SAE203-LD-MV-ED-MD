@@ -1,15 +1,23 @@
 <template>
     <div class="flex flex-col md:flex-row min-h-[calc(100vh-64px)]">
-        <!-- Formulaire centré -->
         <div class="w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto flex items-center justify-center p-4 md:p-5">
             <div class="w-full max-w-md">
-                <!-- Affichage des erreurs -->
+                <!-- Bouton retour -->
+                <button @click="$router.back()" type="button"
+                    class="flex items-center mb-6 text-blue-700 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 font-medium focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Retour
+                </button>
+                <!-- Fin bouton retour -->
+
                 <div v-if="error"
                     class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
                     <div class="font-medium">Erreur lors de la création du ticket:</div>
                     <div>{{ errorMessage }}</div>
                 </div>
-
                 <h2 class="text-2xl md:text-3xl font-extrabold dark:text-white mb-4 md:mb-10">Créer un nouveau ticket
                 </h2>
                 <form @submit.prevent="createTicket" class="w-full space-y-4">
@@ -91,7 +99,7 @@ export default {
                 objet: '',
                 description: '',
                 email: '',
-                statut: 'ouvert',
+                statut: 'new',
                 user_id: 1 // Valeur par défaut ou à récupérer depuis l'authentification
             },
             selectedFile: null,

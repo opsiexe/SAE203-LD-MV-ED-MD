@@ -17,16 +17,17 @@ CREATE TABLE IF NOT EXISTS tickets (
     description TEXT NOT NULL,
     email TEXT NOT NULL,
     piece_jointe TEXT,
-    statut TEXT DEFAULT 'pending',
+    statut TEXT DEFAULT 'Nouveau',
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     date_modification TIMESTAMP,
     date_resolution TIMESTAMP,
-    user_id INTEGER NOT NULL
+    user_id INTEGER NOT NULL,
+    comentaire TEXT
 );
-CREATE TABLE IF NOT EXISTS technicien (
+CREATE TABLE IF NOT EXISTS technicien(
     id SERIAL PRIMARY KEY,
     nom TEXT NOT NULL,
-    prenom TEXT NOT NULL,
+    prenom TEXT NOT NULL
 );
 """)
 

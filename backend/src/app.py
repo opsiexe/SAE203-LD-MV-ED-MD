@@ -1,11 +1,8 @@
-from fileinput import filename
-from re import search
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, make_response, send_from_directory, session
 from flask_cors import CORS
 from email.mime.text import MIMEText
 import psycopg2
 import smtplib
-import datetime
 import os
 from werkzeug.utils import secure_filename
 

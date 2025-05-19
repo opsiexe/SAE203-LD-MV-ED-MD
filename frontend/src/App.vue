@@ -8,7 +8,7 @@ const route = useRoute()
 <template>
   <div>
     <!-- Affiche la navbar sauf sur / et /login -->
-    <navbar v-if="route.path !== '/' && route.path !== '/login'" />
+    <navbar v-if="route.path !== '/' && route.path !== '/login' && route.path !== '/logout'" />
     <router-view />
   </div>
 </template>

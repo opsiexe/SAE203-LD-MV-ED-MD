@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import MyTickets from './components/mytickets.vue';
 import NewTickets from './components/newtickets.vue';
 import LoginPage from './components/login.vue';
+import LogoutPage from './components/logout.vue';
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/login',
     name: 'loginPage',
     component: LoginPage,
+  },
+  {
+    path: '/logout',
+    name: 'logoutPage',
+    component: LogoutPage,
   },
 ];
 
