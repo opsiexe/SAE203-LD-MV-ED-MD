@@ -100,7 +100,7 @@ export default {
                 description: '',
                 email: '',
                 statut: 'new',
-                user_id: 1 // Valeur par défaut ou à récupérer depuis l'authentification
+                user_id: 1, // <-- ici, null au lieu de 1
             },
             selectedFile: null,
             isSubmitting: false,

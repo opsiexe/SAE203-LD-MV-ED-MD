@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des techniciens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Gestion des techniciens</h1>
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 18px;">
+            <a href="{{ url_for('ajouter_technicien') }}" class="btn">Créer un technicien</a>
+        </div>
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Action</th>
+            </tr>
+            {% for tech in techniciens %}
+            <tr>
+                <td>{{ tech[1] }}</td>
+                <td>{{ tech[2] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('supprimer_technicien', technicien_id=tech[0]) }}"
+                        style="display:inline;">
+                        <button type="submit" class="btn"
+                            onclick="return confirm('Supprimer ce technicien ?')">Supprimer</button>
+                    </form>
+                    <a href="{{ url_for('page_technicien', technicien_id=tech[0]) }}" class="btn">Voir tickets</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="text-align: right;">
+            <a href="{{ url_for('index') }}" class="btn">Retour</a>
+        </div>
+    </div>
+</body>
+
+</html>

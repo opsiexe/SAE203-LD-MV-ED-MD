@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un technicien</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ajouter un technicien</h1>
+        <form method="post" style="max-width: 400px; margin: 0 auto;">
+            <div style="margin-bottom: 18px;">
+                <label for="nom" style="display:block; margin-bottom:6px; color:#333;">Nom</label>
+                <input type="text" id="nom" name="nom" required
+                    style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;">
+            </div>
+            <div style="margin-bottom: 18px;">
+                <label for="prenom" style="display:block; margin-bottom:6px; color:#333;">Prénom</label>
+                <input type="text" id="prenom" name="prenom" required
+                    style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;">
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Créer</button>
+        </form>
+        <div style="text-align:right; margin-top:18px;">
+            <a href="{{ url_for('techniciens') }}" class="btn">Retour</a>
+        </div>
+    </div>
+</body>
+
+</html>

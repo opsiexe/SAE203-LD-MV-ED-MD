@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets de {{ technicien[0] }} {{ technicien[1] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Tickets de {{ technicien[0] }} {{ technicien[1] }}</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Objet</th>
+                <th>Description</th>
+                <th>Statut</th>
+            </tr>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket[0] }}</td>
+                <td>{{ ticket[1] }}</td>
+                <td>{{ ticket[2] }}</td>
+                <td>{{ ticket[5] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="text-align: right;">
+            <a href="{{ url_for('techniciens') }}" class="btn">Retour</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -9,6 +9,8 @@
 
 <body>
     <h1>Liste des Tickets</h1>
+    <a href="{{ url_for('techniciens') }}" class="btn" style="margin-bottom: 16px;">Gérer les techniciens</a>
+    <button type="button" class="btn" id="refresh-tickets-btn" style="margin-bottom: 16px;">Actualiser</button>
     <form method="get" action="{{ url_for('rechercher_tickets') }}" class="search-form">
         <div>
             <input type="text" name="keyword" placeholder="Rechercher un mot-clé..."
@@ -28,9 +30,11 @@
         <div>
             <label for="statut">Statut :</label>
             <select name="statut" id="statut">
-                <option value="">Tous</option>
-                <option value="ouvert" {% if request.args.get('statut')=='ouvert' %}selected{% endif %}>Ouvert</option>
-                <option value="fini" {% if request.args.get('statut')=='fini' %}selected{% endif %}>Fini</option>
+                <option value="new">Nouveau (non lu)</option>
+                <option value="pending">En attente</option>
+                <option value="assigned">Assigné</option>
+                <option value="resolved">Résolu</option>
+                <option value="closed">Clôturé</option>
             </select>
         </div>
 
@@ -50,9 +54,7 @@
             <button type="submit">Rechercher</button>
         </div>
     </form>
-
     <hr>
-
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul class="flash-messages">
@@ -63,178 +65,247 @@
     {% endif %}
     {% endwith %}
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Utilisateur</th>
-            <th>Object</th>
-            <th>Description</th>
-            <th>Email</th>
-            <th>Pièce jointe</th>
-            <th>Date de crétaion</th>
-            <th>Status</th>
-            <th>Commentaire</th>
-            <th>Action</th>
-            
-        </tr>
-        {% for ticket in tickets %}
-        <tr>
-            <td>{{ ticket[0] }}</td>
-            <td>{{ ticket[9] }}</td>
-            <td>{{ ticket[1] }}</td>
-            <td>{{ ticket[2] }}</td>
-            <td>{{ ticket[3] }}</td>
-            <td class="piece-jointe">
-                {% if ticket[4] %}
-                <a href="{{ url_for('uploaded_file', filename=ticket[4]) }}" target="_blank" class="piece-jointe-link">
-                    {% if ticket[4].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
-                    <div class="preview-container">
-                        <img src="{{ url_for('uploaded_file', filename=ticket[4]) }}" class="preview-img" alt="Aperçu">
-                    </div>
-                    {% elif ticket[4].lower().endswith('.pdf') %}
-                    <div class="preview-container pdf">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        <span class="file-name">PDF</span>
-                    </div>
-                    {% elif ticket[4].lower().endswith(('.doc', '.docx')) %}
-                    <div class="preview-container doc">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                        </svg>
-                        <span class="file-name">DOC</span>
-                    </div>
-                    {% elif ticket[4].lower().endswith(('.xls', '.xlsx')) %}
-                    <div class="preview-container xls">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <rect x="8" y="12" width="8" height="8" rx="1"></rect>
-                        </svg>
-                        <span class="file-name">XLS</span>
-                    </div>
-                    {% elif ticket[4].lower().endswith('.txt') %}
-                    <div class="preview-container txt">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                        </svg>
-                        <span class="file-name">TXT</span>
-                    </div>
+    <div id="tickets-table">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Utilisateur</th>
+                <th>Object</th>
+                <th>Description</th>
+                <th>Email</th>
+                <th>Pièce jointe</th>
+                <th>Date de crétaion</th>
+                <th>Status</th>
+                <th>Discussion</th> <!-- Remplace "Commentaire" par "Discussion" -->
+                <th>Action</th>
+            </tr>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket[0] }}</td>
+                <td>{{ ticket[9] }}</td>
+                <td>{{ ticket[1] }}</td>
+                <td>{{ ticket[2] }}</td>
+                <td>{{ ticket[3] }}</td>
+                <td class="piece-jointe">
+                    {% if ticket[4] %}
+                    <a href="{{ url_for('uploaded_file', filename=ticket[4]) }}" target="_blank"
+                        class="piece-jointe-link">
+                        {% if ticket[4].lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                        <div class="preview-container">
+                            <img src="{{ url_for('uploaded_file', filename=ticket[4]) }}" class="preview-img"
+                                alt="Aperçu">
+                        </div>
+                        {% elif ticket[4].lower().endswith('.pdf') %}
+                        <div class="preview-container pdf">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                            <span class="file-name">PDF</span>
+                        </div>
+                        {% elif ticket[4].lower().endswith(('.doc', '.docx')) %}
+                        <div class="preview-container doc">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                            <span class="file-name">DOC</span>
+                        </div>
+                        {% elif ticket[4].lower().endswith(('.xls', '.xlsx')) %}
+                        <div class="preview-container xls">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <rect x="8" y="12" width="8" height="8" rx="1"></rect>
+                            </svg>
+                            <span class="file-name">XLS</span>
+                        </div>
+                        {% elif ticket[4].lower().endswith('.txt') %}
+                        <div class="preview-container txt">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                            </svg>
+                            <span class="file-name">TXT</span>
+                        </div>
+                        {% else %}
+                        <div class="preview-container file">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+                                <polyline points="13 2 13 9 20 9"></polyline>
+                            </svg>
+                            <span class="file-name">Fichier</span>
+                        </div>
+                        {% endif %}
+                        <div class="filename-tooltip">{{ ticket[4] }}</div>
+                    </a>
                     {% else %}
-                    <div class="preview-container file">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                            <polyline points="13 2 13 9 20 9"></polyline>
-                        </svg>
-                        <span class="file-name">Fichier</span>
-                    </div>
+                    <div class="no-file">Aucune</div>
                     {% endif %}
-                    <div class="filename-tooltip">{{ ticket[4] }}</div>
-                </a>
-                {% else %}
-                <div class="no-file">Aucune</div>
-                {% endif %}
-            </td>
-            <td>
-                {% if ticket[6] %}
-                {{ ticket[6].strftime('%d/%m/%Y %H:%M') }}
-                {% else %}
-                Inconnue
-                {% endif %}
-            </td>
-            <td>{{ ticket[5] }}</td>
-            <td>
-                <!-- Bouton déclencheur -->
-<button type="button" class="btn" onclick="openPopup({{ ticket[0] }})">Accéder à la discussion</button>
+                </td>
+                <td>
+                    {% if ticket[6] %}
+                    {{ ticket[6].strftime('%d/%m/%Y %H:%M') }}
+                    {% else %}
+                    Inconnue
+                    {% endif %}
+                </td>
+                <td>{{ statut_labels.get(ticket[5], ticket[5]) }}</td>
+                <td>
+                    <!-- Bouton Discussion -->
+                    <button type="button" class="btn" onclick="openPopup({{ ticket[0] }})">Accéder à la
+                        discussion</button>
+                    <!-- Popup -->
+                    <div id="popup-{{ ticket[0] }}" class="popup-overlay" style="display:none;">
+                        <div class="popup-content">
+                            <span class="close-btn" onclick="closePopup({{ ticket[0] }})" title="Fermer">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#888"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="11" fill="#f5f5f5" stroke="#ccc" />
+                                    <line x1="8" y1="8" x2="16" y2="16" />
+                                    <line x1="16" y1="8" x2="8" y2="16" />
+                                </svg>
+                            </span>
+                            <h2>Discussion avec {{ ticket[3] }}</h2>
+                            <div class="chat-history" id="chat-history-{{ ticket[0] }}">
+                                Chargement...
+                            </div>
+                            <form class="chat-form" method="POST"
+                                action="{{ url_for('send_email', ticket_id=ticket[0]) }}">
+                                <input type="hidden" name="email" value="{{ ticket[3] }}">
+                                <textarea name="message" id="message-{{ ticket[0] }}" placeholder="Votre message..."
+                                    rows="2"></textarea>
+                                <button type="submit" class="btn">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <!-- Menu déroulant pour assigner un technicien -->
+                    <form method="POST" action="{{ url_for('assigner_technicien', ticket_id=ticket[0]) }}"
+                        style="margin-bottom: 8px;">
+                        <label for="tech-{{ ticket[0] }}">Assigner à :</label>
+                        <select name="technicien_id" id="tech-{{ ticket[0] }}">
+                            {% for tech in techniciens %}
+                            <option value="{{ tech[0] }}">{{ tech[1] }} {{ tech[2] }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit">Assigner</button>
+                    </form>
 
-<!-- Fenêtre modale cachée -->
-<div id="popup-{{ ticket[0] }}" class="popup-overlay">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closePopup({{ ticket[0] }})">&times;</span>
-        <h2>Discussion avec {{ ticket[3] }}</h2>
-
-        <!-- Exemple de formulaire de discussion -->
-        <form method="POST" action="{{ url_for('send_email', ticket_id=ticket[0]) }}">
-            <input type="hidden" name="email" value="{{ ticket[3] }}">
-            <textarea name="message" placeholder="Votre message..."></textarea>
-            <button type="submit" class="btn">Envoyer</button>
-        </form>
-
-        <!-- Historique de messages ici -->
-        <div class="chat-history">
-            <!-- À générer dynamiquement côté Flask -->
-            <p><strong>Client:</strong> Bonjour, j’ai un souci...</p>
-            <p><strong>Support:</strong> Merci de votre message, on y regarde !</p>
-        </div>
+                    <!-- Formulaire de changement de statut existant -->
+                    <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
+                        <ul><label for="statut-{{ ticket[0] }}">Changer le statut du ticket :</label></ul>
+                        <select name="statut" id="statut-{{ ticket[0] }}">
+                            <option value="new">Nouveau (non lu)</option>
+                            <option value="pending">En attente</option>
+                            <option value="assigned">Assigné</option>
+                            <option value="resolved">Résolu</option>
+                            <option value="closed">Clôturé</option>
+                        </select>
+                        <button type="submit">Mettre à jour</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
-</div>
-
-
-            </td>
-            <td>
-                
-                
-                
-                </form>
-                
-                <form method="POST" action="{{ url_for('mark_open', ticket_id=ticket[0]) }}">
-                    <ul><label for="status">Changer le statut du ticket :</label></ul>
-                    <select name="status" id="status">
-                        <option value="nouveau">Nouveau (non lu)</option>
-                        <option value="en_cours">En cours (lu, pris en compte)</option>
-                        <option value="attribue">Attribué</option>
-                        <option value="resolu">Résolu</option>
-                        <option value="cloture">Clôturé</option>
-                    </select>
-                    
-                    <button type="submit">Mettre à jour</button>
-
-
-                    <ul><label for="status">Assigner à un technicien :</label></ul>
-                    <select name="status" id="status">
-                        <option value="technicien 1"> technicien 1</option>
-                        <option value="technicien 2"> technicien 2</option>
-                        <option value="technicien 3">technicien 3</option>
-                        
-                    </select>
-                    
-                    <button type="submit">Assigner</button>
-
-                </form>
-                </form>
-               
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
 </body>
 
 </html>
 <script>
     function openPopup(ticketId) {
         document.getElementById('popup-' + ticketId).style.display = 'flex';
+        fetch('/api/messages/' + ticketId)
+            .then(res => res.json())
+            .then(messages => {
+                let html = '';
+                messages.forEach(msg => {
+                    const senderClass = msg.sender === "support" ? "support" : "client";
+                    html += `<div class="bubble ${senderClass}">
+                            ${msg.content.replace(/\n/g, "<br>")}
+                            <span class="date">${msg.date}</span>
+                         </div>`;
+                });
+                document.getElementById('chat-history-' + ticketId).innerHTML = html || "Aucun message.";
+                // Scroll en bas
+                const chatHistory = document.getElementById('chat-history-' + ticketId);
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            });
+        // Focus sur la zone de texte
+        setTimeout(() => {
+            const textarea = document.getElementById('message-' + ticketId);
+            if (textarea) textarea.focus();
+        }, 100);
     }
-    
+
     function closePopup(ticketId) {
         document.getElementById('popup-' + ticketId).style.display = 'none';
     }
-    </script>
-    
-    
-    
+
+    // Fermer la popup si clic en dehors du contenu
+    document.addEventListener('mousedown', function (e) {
+        document.querySelectorAll('.popup-overlay[style*="display: flex"]').forEach(popup => {
+            if (e.target === popup) {
+                const id = popup.id.replace('popup-', '');
+                closePopup(id);
+            }
+        });
+    });
+
+    // Empêche la propagation du clic à l'intérieur de la popup
+    document.querySelectorAll('.popup-content').forEach(content => {
+        content.addEventListener('mousedown', function (e) {
+            e.stopPropagation();
+        });
+    });
+
+    // Gestion clavier pour la zone de rédaction
+    document.addEventListener('keydown', function (e) {
+        const popup = document.querySelector('.popup-overlay[style*="display: flex"]');
+        if (!popup) return;
+        const textarea = popup.querySelector('textarea[name="message"]');
+        if (!textarea) return;
+
+        // Echap ferme la popup
+        if (e.key === "Escape") {
+            const id = popup.id.replace('popup-', '');
+            closePopup(id);
+        }
+        // Entrée envoie, Shift+Entrée saute une ligne
+        if (document.activeElement === textarea) {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                textarea.form.querySelector('button[type="submit"],button.btn').click();
+            }
+            // sinon, Shift+Entrée = saut de ligne (comportement natif)
+        }
+    });
+
+    // Actualisation de la liste des tickets sans recharger la page
+    document.getElementById('refresh-tickets-btn').addEventListener('click', function () {
+        fetch('/api/tickets_table')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('tickets-table').innerHTML = html;
+            });
+    });
+</script>
+{# filepath: /workspaces/SAE203/backend/src/templates/index.html #}
