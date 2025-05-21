@@ -26,7 +26,7 @@
               Nouveau ticket
             </button>
           </router-link>
-          <router-link to="/logout">
+          <router-link to="/login">
             <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition">
               Deconnexion
             </button>
@@ -42,25 +42,25 @@
         <div class="mb-2 flex flex-col items-start relative">
           <h3 class="text-xl font-semibold text-white-100 mb-1">{{ ticket.objet }}</h3>
           <div class="absolute top-0 right-0 flex flex-col items-end">
-            <span v-if="ticket.statut == 'new'"
+            <span v-if="ticket.statut === 'new'"
               class="bg-blue-600 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
-              {{ 'Nouveau' || 'Non défini' }}
+              Nouveau
             </span>
-            <span v-else-if="ticket.statut == 'pending'"
+            <span v-else-if="ticket.statut === 'pending'"
               class="bg-orange-600 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
-              {{ 'En cours' || 'Non défini' }}
+              En cours
             </span>
-            <span v-else-if="ticket.status == 'assigned'"
+            <span v-else-if="ticket.statut === 'assigned'"
               class="bg-purple-600 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
-              {{ 'Assigné' || 'Non défini' }}
+              Assigné
             </span>
-            <span v-else-if="ticket.status == 'resolved'"
+            <span v-else-if="ticket.statut === 'resolved'"
               class="bg-green-600 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
-              {{ 'Résolu' || 'Non défini' }}
+              Résolu
             </span>
-            <span v-else-if="ticket.status == 'closed'"
+            <span v-else-if="ticket.statut === 'closed'"
               class="bg-gray-600 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
-              {{ 'Clôturé' || 'Non défini' }}
+              Clôturé
             </span>
             <span v-else class="bg-gray-400 text-white rounded-lg px-3 py-1 text-sm font-bold mb-2">
               {{ ticket.statut || 'Non défini' }}

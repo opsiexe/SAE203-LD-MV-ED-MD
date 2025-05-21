@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS tickets (
     date_resolution TIMESTAMP,
     user_id INTEGER NOT NULL, -- réservé AzureAD
     technicien_id INTEGER, -- <--- nouveau champ pour l'attribution
-    comentaire TEXT
+    comentaire TEXT,
+    ticket_code VARCHAR(32) UNIQUE -- <--- code unique pour chaque ticket
 );
 CREATE TABLE IF NOT EXISTS technicien(
     id SERIAL PRIMARY KEY,

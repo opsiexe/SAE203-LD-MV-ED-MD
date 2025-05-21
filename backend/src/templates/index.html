@@ -20,6 +20,7 @@
         <div>
             <label for="filter_by">Filtrer par :</label>
             <select name="filter_by" id="filter_by">
+                <option value="" {% if not request.args.get('filter_by') %}selected{% endif %}>--</option>
                 <option value="objet" {% if request.args.get('filter_by')=='objet' %}selected{% endif %}>Objet</option>
                 <option value="description" {% if request.args.get('filter_by')=='description' %}selected{% endif %}>
                     Description</option>
@@ -30,17 +31,24 @@
         <div>
             <label for="statut">Statut :</label>
             <select name="statut" id="statut">
-                <option value="new">Nouveau (non lu)</option>
-                <option value="pending">En attente</option>
-                <option value="assigned">Assigné</option>
-                <option value="resolved">Résolu</option>
-                <option value="closed">Clôturé</option>
+                <option value="" {% if not request.args.get('statut') %}selected{% endif %}>--</option>
+                <option value="new" {% if request.args.get('statut')=='new' %}selected{% endif %}>Nouveau (non lu)
+                </option>
+                <option value="pending" {% if request.args.get('statut')=='pending' %}selected{% endif %}>En attente
+                </option>
+                <option value="assigned" {% if request.args.get('statut')=='assigned' %}selected{% endif %}>Assigné
+                </option>
+                <option value="resolved" {% if request.args.get('statut')=='resolved' %}selected{% endif %}>Résolu
+                </option>
+                <option value="closed" {% if request.args.get('statut')=='closed' %}selected{% endif %}>Clôturé
+                </option>
             </select>
         </div>
 
         <div>
             <label for="order_by">Trier par :</label>
             <select name="order_by" id="order_by">
+                <option value="" {% if not request.args.get('order_by') %}selected{% endif %}>--</option>
                 <option value="date_creation" {% if request.args.get('order_by')=='date_creation' %}selected{% endif %}>
                     Date de création</option>
                 <option value="date_modification" {% if request.args.get('order_by')=='date_modification' %}selected{%
@@ -65,10 +73,81 @@
     {% endif %}
     {% endwith %}
 
+    <div id="active-filters" style="margin: 12px 0;">
+        {% if request.args.get('keyword') %}
+        <span class="filter-bubble">
+            Mot-clé: {{ request.args.get('keyword') }}
+            <a href="{{ url_for('rechercher_tickets',
+                keyword=None,
+                filter_by=request.args.get('filter_by'),
+                statut=request.args.get('statut'),
+                order_by=request.args.get('order_by')
+            ) }}" class="remove-filter" title="Retirer ce filtre">&times;</a>
+        </span>
+        {% endif %}
+        {% if request.args.get('filter_by') %}
+        <span class="filter-bubble">
+            Filtrer par: {{ request.args.get('filter_by') }}
+            <a href="{{ url_for('rechercher_tickets',
+                keyword=request.args.get('keyword'),
+                filter_by=None,
+                statut=request.args.get('statut'),
+                order_by=request.args.get('order_by')
+            ) }}" class="remove-filter" title="Retirer ce filtre">&times;</a>
+        </span>
+        {% endif %}
+        {% if request.args.get('statut') %}
+        <span class="filter-bubble">
+            Statut: {{ statut_labels.get(request.args.get('statut'), request.args.get('statut')) }}
+            <a href="{{ url_for('rechercher_tickets',
+                keyword=request.args.get('keyword'),
+                filter_by=request.args.get('filter_by'),
+                statut=None,
+                order_by=request.args.get('order_by')
+            ) }}" class="remove-filter" title="Retirer ce filtre">&times;</a>
+        </span>
+        {% endif %}
+        {% if request.args.get('order_by') %}
+        <span class="filter-bubble">
+            Tri: {{ request.args.get('order_by') }}
+            <a href="{{ url_for('rechercher_tickets',
+                keyword=request.args.get('keyword'),
+                filter_by=request.args.get('filter_by'),
+                statut=request.args.get('statut'),
+                order_by=None
+            ) }}" class="remove-filter" title="Retirer ce filtre">&times;</a>
+        </span>
+        {% endif %}
+    </div>
+
+    <style>
+        .filter-bubble {
+            display: inline-block;
+            background: #e0e0e0;
+            color: #333;
+            border-radius: 16px;
+            padding: 6px 12px;
+            margin: 0 6px 6px 0;
+            font-size: 0.95em;
+        }
+
+        .filter-bubble .remove-filter {
+            color: #888;
+            margin-left: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .filter-bubble .remove-filter:hover {
+            color: #d00;
+        }
+    </style>
+
     <div id="tickets-table">
         <table>
             <tr>
-                <th>ID</th>
+                <!-- <th>ID</th> --> <!-- Colonne ID retirée -->
                 <th>Utilisateur</th>
                 <th>Object</th>
                 <th>Description</th>
@@ -76,12 +155,13 @@
                 <th>Pièce jointe</th>
                 <th>Date de crétaion</th>
                 <th>Status</th>
-                <th>Discussion</th> <!-- Remplace "Commentaire" par "Discussion" -->
+                <th>Assigné à</th> <!-- Nouvelle colonne ajoutée ici -->
+                <th>Discussion</th>
                 <th>Action</th>
             </tr>
             {% for ticket in tickets %}
             <tr>
-                <td>{{ ticket[0] }}</td>
+                <!-- <td>{{ ticket[0] }}</td> --> <!-- Colonne ID retirée -->
                 <td>{{ ticket[9] }}</td>
                 <td>{{ ticket[1] }}</td>
                 <td>{{ ticket[2] }}</td>
@@ -169,6 +249,19 @@
                 </td>
                 <td>{{ statut_labels.get(ticket[5], ticket[5]) }}</td>
                 <td>
+                    {% set assigned = [] %}
+                    {% for tech in techniciens %}
+                    {% if tech[0]|int == ticket[10]|int %}
+                    {% set _ = assigned.append(tech[2] ~ ' ' ~ tech[1]) %}
+                    {% endif %}
+                    {% endfor %}
+                    {% if assigned %}
+                    <b>{{ assigned[0] }}</b>
+                    {% else %}
+                    <b>Non assigné</b>
+                    {% endif %}
+                </td>
+                <td>
                     <!-- Bouton Discussion -->
                     <button type="button" class="btn" onclick="openPopup({{ ticket[0] }})">Accéder à la
                         discussion</button>
@@ -204,7 +297,8 @@
                         <label for="tech-{{ ticket[0] }}">Assigner à :</label>
                         <select name="technicien_id" id="tech-{{ ticket[0] }}">
                             {% for tech in techniciens %}
-                            <option value="{{ tech[0] }}">{{ tech[1] }} {{ tech[2] }}</option>
+                            <option value="{{ tech[0] }}" {% if tech[0]==ticket[10] %}selected{% endif %}>{{ tech[1] }}
+                                {{ tech[2] }}</option>
                             {% endfor %}
                         </select>
                         <button type="submit">Assigner</button>
@@ -301,11 +395,8 @@
 
     // Actualisation de la liste des tickets sans recharger la page
     document.getElementById('refresh-tickets-btn').addEventListener('click', function () {
-        fetch('/api/tickets_table')
-            .then(res => res.text())
-            .then(html => {
-                document.getElementById('tickets-table').innerHTML = html;
-            });
+        // Recharge la page sans paramètres GET (donc sans filtres)
+        window.location.href = "{{ url_for('index') }}";
     });
 </script>
 {# filepath: /workspaces/SAE203/backend/src/templates/index.html #}

@@ -8,6 +8,9 @@ import email
 import imaplib
 import smtplib
 import psycopg2
+import uuid
+import time
+import socket
 from email.mime.text import MIMEText
 from flask import (
     Flask, render_template, request, flash, redirect, url_for,
@@ -16,6 +19,7 @@ from flask import (
 )
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from email.header import decode_header
 
 # ==========================
 # PARAMÈTRES CONFIGURABLES
@@ -73,10 +77,11 @@ def clean_email_body(body):
     lines = body.splitlines()
     cleaned = []
     for line in lines:
+        # Arrête à la première citation ou signature
         if line.strip().startswith('--'):
             break
-        if re.match(r'^(Le|On|From:|De :|>|\s*>).*', line):
-            continue
+        if re.match(r'^(Le|On|From:|De :|>|\s*>|.*écrit\s*:).*', line, re.IGNORECASE):
+            break
         cleaned.append(line)
     return '\n'.join([l for l in cleaned]).strip()
 
@@ -102,31 +107,49 @@ def get_last_message_headers(ticket_email):
         return None, None, None
 
 
+def extract_ticket_code(subject):
+    import re
+    # Décodage du sujet si encodé MIME
+    if subject:
+        decoded_fragments = decode_header(subject)
+        subject = ''.join(
+            fragment.decode(
+                encoding or 'utf-8') if isinstance(fragment, bytes) else fragment
+            for fragment, encoding in decoded_fragments
+        )
+    m = re.search(r'\[Ticket #([A-Za-z0-9\-]+)\]', subject or "")
+    return m.group(1) if m else None
+
+
 def sync_client_emails():
-    """Synchronise les emails clients et les stocke dans la base."""
     try:
+        print("Début synchronisation IMAP")
         mail = imaplib.IMAP4_SSL(EMAIL_CONFIG["imap_server"])
         mail.login(EMAIL_CONFIG["address"], EMAIL_CONFIG["password"])
         mail.select("inbox")
         status, data = mail.search(None, 'ALL')
         mail_ids = data[0].split()
+        print(f"Nombre de mails trouvés: {len(mail_ids)}")
         conn = get_db_connection()
         cur = conn.cursor()
         for mail_id in mail_ids:
             status, msg_data = mail.fetch(mail_id, "(RFC822)")
             msg = email.message_from_bytes(msg_data[0][1])
-            from_email = email.utils.parseaddr(msg["From"])[1]
-            mail_date = msg.get("Date")
-            try:
-                parsed_date = email.utils.parsedate_to_datetime(mail_date)
-            except Exception:
-                parsed_date = datetime.datetime.now()
+            subject = msg.get("Subject", "")
+            ticket_code = extract_ticket_code(subject)
+            print(f"Sujet: {subject} | Code extrait: {ticket_code}")
+            if not ticket_code:
+                print("Aucun code ticket trouvé, mail ignoré.")
+                continue
             cur.execute(
-                "SELECT id FROM tickets WHERE email = %s ORDER BY id DESC LIMIT 1", (from_email,))
+                "SELECT id FROM tickets WHERE ticket_code = %s", (ticket_code,))
             ticket = cur.fetchone()
             if not ticket:
+                print(
+                    f"Aucun ticket trouvé pour code {ticket_code}, mail ignoré.")
                 continue
             ticket_id = ticket[0]
+            from_email = email.utils.parseaddr(msg["From"])[1]
             # Extraction du corps du mail
             if msg.is_multipart():
                 body = ""
@@ -139,19 +162,38 @@ def sync_client_emails():
             else:
                 body = msg.get_payload(decode=True).decode()
             body = clean_email_body(body)
+            # Affiche le début du corps
+            print(f"Corps extrait: {body[:50]}...")
             # Vérifie si déjà stocké
             cur.execute("SELECT 1 FROM messages WHERE ticket_id = %s AND content = %s AND sender = %s",
                         (ticket_id, body, from_email))
             if not cur.fetchone():
+                print(f"Insertion message ticket {ticket_id} de {from_email}")
                 cur.execute(
-                    "INSERT INTO messages (ticket_id, sender, content, date) VALUES (%s, %s, %s, %s)",
-                    (ticket_id, from_email, body, parsed_date)
+                    "INSERT INTO messages (ticket_id, sender, content) VALUES (%s, %s, %s)",
+                    (ticket_id, from_email, body)
                 )
                 conn.commit()
+            else:
+                print("Message déjà présent en base, pas d'insertion.")
         cur.close()
         conn.close()
+        print("Fin synchronisation IMAP")
     except Exception as e:
         print(f"Erreur lors de la synchronisation des mails : {e}")
+
+
+LAST_EMAIL_SYNC = 0
+EMAIL_SYNC_INTERVAL = 90  # secondes (1min30 recommandé pour Gmail)
+
+
+def sync_client_emails_if_needed():
+    global LAST_EMAIL_SYNC
+    now = time.time()
+    if now - LAST_EMAIL_SYNC > EMAIL_SYNC_INTERVAL:
+        sync_client_emails()
+        LAST_EMAIL_SYNC = now
+
 
 # ==========================
 # ROUTES FLASK
@@ -162,7 +204,8 @@ def sync_client_emails():
 def index():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT * FROM tickets;')
+    # Ne sélectionne pas les tickets clôturés par défaut
+    cur.execute("SELECT * FROM tickets WHERE statut != 'closed';")
     tickets = cur.fetchall()
     cur.execute('SELECT * FROM technicien;')
     techniciens = cur.fetchall()
@@ -212,9 +255,13 @@ def delete_ticket(ticket_id):
     """Supprime un ticket et sa pièce jointe si présente."""
     conn = get_db_connection()
     cur = conn.cursor()
+    # Supprimer d'abord les messages liés à ce ticket
+    cur.execute("DELETE FROM messages WHERE ticket_id = %s", (ticket_id,))
+    # Récupérer la pièce jointe avant de supprimer le ticket
     cur.execute("SELECT piece_jointe FROM tickets WHERE id = %s", (ticket_id,))
     result = cur.fetchone()
     piece_jointe = result[0] if result else None
+    # Supprimer le ticket
     cur.execute("DELETE FROM tickets WHERE id = %s", (ticket_id,))
     conn.commit()
     cur.close()
@@ -223,24 +270,63 @@ def delete_ticket(ticket_id):
         file_path = os.path.join(UPLOAD_FOLDER, piece_jointe)
         if os.path.exists(file_path):
             os.remove(file_path)
+    # Si la requête vient d'AJAX (frontend)
+    if request.accept_mimetypes['application/json'] >= request.accept_mimetypes['text/html']:
+        return jsonify({"message": "Ticket supprimé avec succès."}), 200
+    # Sinon, redirection classique (interface admin)
     flash("Ticket supprimé avec succès.")
     return redirect(url_for("index"))
 
 
+def get_last_message_headers_for_ticket(ticket_id):
+    """Récupère les en-têtes du dernier mail pour CE ticket."""
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT sender, content, date FROM messages WHERE ticket_id = %s ORDER BY date DESC LIMIT 1",
+            (ticket_id,)
+        )
+        last_msg = cur.fetchone()
+        cur.close()
+        conn.close()
+        if not last_msg:
+            return None, None, None
+        # Si tu stockes Message-ID et References dans la table messages, récupère-les ici
+        # Sinon, retourne juste None pour forcer un nouveau thread
+        return None, None, None
+    except Exception as e:
+        print(f"Erreur lors de la récupération des headers du ticket: {e}")
+        return None, None, None
+
+
 @app.route("/api/send_email/<int:ticket_id>", methods=["POST"])
 def send_email(ticket_id):
-    """Envoie un email au client et l'enregistre dans la base."""
     to_email = request.form["email"]
     message = request.form["message"]
-    message_id, references, subject = get_last_message_headers(to_email)
+    message_id, references, subject = get_last_message_headers_for_ticket(
+        ticket_id)
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT ticket_code FROM tickets WHERE id = %s", (ticket_id,))
+    result = cur.fetchone()
+    ticket_code = result[0] if result else "UNKNOWN"
+    cur.close()
+    conn.close()
     msg = MIMEText(message, "html")
-    msg["Subject"] = subject if subject else "Réponse à votre ticket"
+    msg["Subject"] = f"[Ticket #{ticket_code}] " + \
+        (subject if subject else "Réponse à votre ticket")
     msg["From"] = EMAIL_CONFIG["address"]
     msg["To"] = to_email
-    if message_id:
+
+    # Premier message du ticket : génère un Message-ID unique
+    if not message_id:
+        msg_id = generate_message_id(ticket_code)
+        msg["Message-ID"] = msg_id
+    else:
         msg["In-Reply-To"] = message_id
-    if references:
-        msg["References"] = references
+        msg["References"] = references if references else message_id
+
     try:
         with smtplib.SMTP(EMAIL_CONFIG["smtp_server"], EMAIL_CONFIG["smtp_port"]) as server:
             server.starttls()
@@ -258,6 +344,15 @@ def send_email(ticket_id):
     cur.close()
     conn.close()
     return redirect(url_for("index"))
+
+
+def generate_ticket_code():
+    return str(uuid.uuid4())[:8]  # ou une autre logique
+
+
+def generate_message_id(ticket_code):
+    hostname = socket.getfqdn()
+    return f"<ticket-{ticket_code}-{uuid.uuid4()}@{hostname}>"
 
 
 @app.route("/api/add_ticket", methods=["POST", "OPTIONS"])
@@ -300,10 +395,11 @@ def add_ticket():
         cur = conn.cursor()
         # On ne gère plus l'attribution à un technicien ici
         technicien_id = None
+        ticket_code = generate_ticket_code()
         cur.execute(
-            "INSERT INTO tickets (objet, description, email, piece_jointe, statut, date_creation, date_modification, date_resolution, user_id, technicien_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            "INSERT INTO tickets (objet, description, email, piece_jointe, statut, date_creation, date_modification, date_resolution, user_id, technicien_id, ticket_code) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (object, description, email_addr, attachment_path, status,
-             creation_date, modification_date, resolution_date, user_id, technicien_id)
+             creation_date, modification_date, resolution_date, user_id, technicien_id, ticket_code)
         )
         conn.commit()
         cur.close()
@@ -360,12 +456,12 @@ def get_tickets():
 def rechercher_tickets():
     """Recherche de tickets avec filtres dynamiques."""
     keyword = request.args.get('keyword', '').strip()
-    filter_by = request.args.get('filter_by', 'objet')
+    filter_by = request.args.get('filter_by', '')
     statut = request.args.get('statut', '')
-    order_by = request.args.get('order_by', 'date_creation')
+    order_by = request.args.get('order_by', '')
     query = "SELECT * FROM tickets WHERE 1=1"
     params = []
-    if keyword:
+    if keyword and filter_by:
         if filter_by == 'objet':
             query += " AND objet ILIKE %s"
         elif filter_by == 'description':
@@ -384,22 +480,23 @@ def rechercher_tickets():
     cur = conn.cursor()
     cur.execute(query, params)
     tickets = cur.fetchall()
+    cur.execute('SELECT * FROM technicien;')
+    techniciens = cur.fetchall()
     cur.close()
     conn.close()
     statut_labels = {
         'new': 'Nouveau',
         'pending': 'En attente',
-        'assigned': 'Assigné',
-        'resolved': 'Résolu',
+        'assigned': 'Résolu',
         'closed': 'Clôturé'
     }
-    return render_template('index.html', tickets=tickets, statut_labels=statut_labels)
+    return render_template('index.html', tickets=tickets, statut_labels=statut_labels, techniciens=techniciens)
 
 
 @app.route("/api/messages/<int:ticket_id>")
 def get_messages(ticket_id):
     """Renvoie les messages associés à un ticket (JSON)."""
-    sync_client_emails()
+    sync_client_emails()  # Synchronise IMAP à chaque ouverture de la popup
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute(
@@ -495,8 +592,7 @@ def tickets_table():
     statut_labels = {
         'new': 'Nouveau',
         'pending': 'En attente',
-        'assigned': 'Assigné',
-        'resolved': 'Résolu',
+        'assigned': 'Résolu',
         'closed': 'Clôturé'
     }
     # On extrait juste le code du tableau de tickets
