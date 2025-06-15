@@ -33,11 +33,11 @@ DB_CONFIG = {
 }
 
 EMAIL_CONFIG = {
-    "address": "sae203.md.ld.mv.ed@gmail.com",  # À modifier !
-    "password": "eusm wqix ojss nxdy",          # À modifier !
-    "smtp_server": "smtp.gmail.com",
+    "address": "test@test.com",  # À modifier !
+    "password": "your keys",          # À modifier !
+    "smtp_server": "your smtp server",
     "smtp_port": 587,
-    "imap_server": "imap.gmail.com"
+    "imap_server": "your imap server"
 }
 
 UPLOAD_FOLDER = os.path.join(
